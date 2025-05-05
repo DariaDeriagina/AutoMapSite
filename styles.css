@@ -1,0 +1,242 @@
+/*===========================
+  AutoMap Website Styles
+===========================*/
+
+/*==== Base & Typography ====*/
+body.custom-body {
+	font-family: "Source Sans Pro", sans-serif;
+	background-color: rgba(207, 213, 222, 0.22);
+	font-weight: 100;
+	color: #333;
+	margin: 0;
+	padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: "Bebas Neue", sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin-bottom: 1rem;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+/*==== MARK:  Navbar ====*/
+
+.logo-img {
+	height: 52px;
+	width: auto;
+}
+
+.custom-nav .container {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.custom-nav {
+	background-color: #0254a0;
+	position: sticky;
+	top: 0;
+	z-index: 999;
+}
+.navbar-brand {
+	margin-right: auto;
+}
+
+.navbar-nav {
+	margin-left: auto;
+}
+.navbar a:hover {
+	color: #f57c00;
+}
+.nav-link {
+	color: #ffffff;
+	margin-right: 1rem;
+	font-weight: 400;
+	font-size: 1.2rem;
+}
+
+/* Active nav link style */
+.navbar .navbar-nav .nav-link.active,
+.navbar .navbar-nav .nav-link.active:hover,
+.navbar .navbar-nav .nav-link.active:visited {
+	color: #f57c00;
+	font-weight: 700;
+	font-size: 1.2rem;
+	letter-spacing: 0.3px;
+}
+
+/*==== MARK: Buttons ====*/
+.call-btn {
+	background-color: #f17501;
+	border: none;
+	color: #fff;
+	padding: 0.2rem 2rem;
+	font-family: "Bebas Neue", sans-serif;
+	font-size: 1.4rem;
+	letter-spacing: 1px;
+	border-radius: 20px;
+	text-transform: uppercase;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+	transition: all 0.3s ease;
+}
+.call-btn:hover {
+	background-color: #d96600;
+	transform: translateY(-2px);
+}
+.our-service-btn {
+	background-color: transparent;
+	border: 2px solid #f17501;
+	color: #f17501;
+	padding: 0.2rem 2rem;
+	font-family: "Bebas Neue", sans-serif;
+	font-size: 1.4rem;
+	letter-spacing: 1px;
+	border-radius: 20px;
+	text-transform: uppercase;
+	transition: all 0.3s ease;
+}
+.our-service-btn:hover {
+	background-color: #f17501;
+	color: #fff;
+	transform: translateY(-2px);
+}
+
+/*==== Hero Section ====*/
+
+.hero-title {
+	font-size: 3.5rem;
+	line-height: 1.2;
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.text-expert {
+	color: #0254a0;
+}
+
+.hero-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	justify-content: flex-start;
+	margin-top: 1.5rem;
+}
+
+.hero-subtext {
+	font-size: 28px;
+	font-weight: 400; /* Regular */
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Drop shadow */
+}
+
+/*==== Image ====*/
+.main-image {
+	max-width: 100%;
+	height: auto;
+	border-radius: 0.5rem;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/*==== Icons ====*/
+.icon {
+	width: 24px;
+	height: 24px;
+}
+
+/* Contact box centered and icon fix */
+.contact-box {
+	max-width: 400px;
+	margin: 0 auto;
+	background-color: #e4e9f2;
+	padding: 1rem 1.5rem;
+	border-radius: 1rem;
+	font-weight: 600;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-box .icon {
+	width: 20px;
+	height: 40px;
+}
+
+.contact-box a {
+	transition: all 0.3s ease;
+	line-height: 0.5;
+}
+
+.contact-box a:hover {
+	font-weight: 600;
+	font-size: 1.05rem;
+	transform: scale(1.05);
+	color: #0254a0;
+}
+
+/*==== Brand Logos ====*/
+.brands-slider {
+	background: linear-gradient(90deg, #ffffff, #e4e9f2, #ffffff);
+	overflow: hidden;
+	padding: 1rem 0;
+	height: 100px;
+	display: flex;
+	align-items: center;
+}
+
+.slider-track {
+	display: flex;
+	gap: 40px;
+	animation: slideLeft 120s linear infinite;
+	width: max-content;
+}
+
+.brand-logo {
+	height: 40px;
+	animation: floatY 3s ease-in-out infinite alternate;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.brand-logo:hover {
+	transform: scale(1.1);
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/*==== Animations ====*/
+@keyframes floatY {
+	0% {
+		transform: translateY(0);
+	}
+	100% {
+		transform: translateY(-5px);
+	}
+}
+
+@keyframes slideLeft {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
+}
+
+/*==== MARK: Responsive ====*/
+
+@media (max-width: 991px) {
+	.hero-buttons {
+		justify-content: center;
+	}
+}
+
+@media (max-width: 767px) {
+	.hero-buttons {
+		flex-direction: column;
+		align-items: center;
+		gap: 1.2rem;
+		margin-bottom: 2rem;
+	}
+}
