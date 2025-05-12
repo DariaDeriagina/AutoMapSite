@@ -5,7 +5,7 @@
 /*==== Base & Typography ====*/
 body.custom-body {
 	font-family: "Source Sans Pro", sans-serif;
-	background-color: rgba(207, 213, 222, 0.22);
+	background-color: #edeef0;
 	font-weight: 100;
 	color: #333;
 	margin: 0;
@@ -137,10 +137,27 @@ html {
 
 /*==== Image ====*/
 .main-image {
-	max-width: 100%;
+	max-width: 80%;
 	height: auto;
 	border-radius: 0.5rem;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.main-image-wrapper {
+	position: relative;
+	display: inline-block;
+}
+
+.vector-dots {
+	position: absolute;
+	bottom: -20px;
+	right: -20px;
+	width: 220px; /* adjust size */
+	z-index: 5; /* behind main photo */
+	opacity: 0.8;
+}
+.main-image {
+	position: relative;
+	z-index: 1;
 }
 
 /*==== Icons ====*/
@@ -185,6 +202,9 @@ html {
 	height: 100px;
 	display: flex;
 	align-items: center;
+	width: 100vw;
+	margin-left: calc(-50vw + 50%);
+	position: relative;
 }
 
 .slider-track {
@@ -200,18 +220,13 @@ html {
 	transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.brand-logo:hover {
-	transform: scale(1.1);
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
 /*==== Animations ====*/
 @keyframes floatY {
 	0% {
 		transform: translateY(0);
 	}
 	100% {
-		transform: translateY(-5px);
+		transform: translateY(0px);
 	}
 }
 
@@ -222,6 +237,57 @@ html {
 	100% {
 		transform: translateX(-50%);
 	}
+}
+
+/*==== MARK: AboutUs Section ====*/
+
+.section-title {
+	font-family: "Bebas Neue", sans-serif;
+	font-size: 2.5rem;
+	color: #0254a0;
+	margin-bottom: 2rem;
+	text-transform: uppercase;
+}
+
+.team-card {
+	padding: 1rem;
+}
+
+.team-photo {
+	border-radius: 0.5rem;
+	margin-bottom: 1rem;
+	max-height: 320px;
+	object-fit: cover;
+	width: 100%;
+}
+
+.team-name {
+	font-weight: 700;
+	color: #283756;
+	font-size: 1.6rem;
+	margin-bottom: 0.2rem;
+}
+
+.team-title {
+	color: #f17501;
+	font-weight: 600;
+	margin-bottom: 1rem;
+}
+
+.team-text {
+	font-size: 0.95rem;
+	color: #444;
+}
+
+/* Vector background behind third person */
+.about-vector {
+	position: absolute;
+	bottom: -20px;
+	right: -10px;
+	width: 300%;
+	opacity: 0.2;
+	z-index: 0;
+	pointer-events: none;
 }
 
 /*==== MARK: Responsive ====*/
