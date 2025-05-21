@@ -41,11 +41,13 @@ html {
 }
 
 .custom-nav {
-	background-color: #0254a0;
+	background: linear-gradient(90deg, #1f158e 0%, #005aae 100%);
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	position: sticky;
 	top: 0;
 	z-index: 999;
 }
+
 .navbar-brand {
 	margin-right: auto;
 }
@@ -373,7 +375,170 @@ html {
 .text-blue {
 	color: #0254a0;
 }
-/*==== MARK: Responsive ====*/
+
+/* === MARK: Testimonials Section === */
+.testimonials-section {
+	padding: 60px 20px;
+	background-color: #f1f2f4;
+	text-align: center;
+}
+
+.section-subtitle {
+	color: #f17501;
+	font-weight: bold;
+	font-size: 1.2rem;
+	margin-bottom: 0.5rem;
+}
+
+.section-title {
+	color: #0254a0;
+	font-size: 2.5rem;
+	font-weight: bold;
+	margin-bottom: 3rem;
+	text-transform: uppercase;
+}
+
+/*  Testimonials */
+.testimonial-card {
+	width: 300px;
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	transition: transform 0.4s ease, box-shadow 0.3s ease;
+}
+
+/* === Quote Box === */
+.testimonial-content {
+	position: relative;
+	background-color: #fff;
+	border: 3px solid #f17501;
+	border-radius: 10px;
+	padding: 30px 20px;
+	text-align: left;
+	min-height: 220px;
+	box-sizing: border-box;
+}
+
+.testimonial-content.testimonial-blue {
+	border-color: #0254a0;
+}
+
+.quote-icon {
+	width: 24px;
+	height: 24px;
+	margin-bottom: 10px;
+}
+/* === Quote Bubble Arrow === */
+.testimonial-content::after {
+	content: "";
+	position: absolute;
+	bottom: -12px;
+	left: 50%;
+	transform: translateX(-50%);
+	border-style: solid;
+	border-width: 12px 12px 0 12px;
+	border-color: #f17501 transparent transparent transparent;
+}
+
+/* === Quote Text === */
+.testimonial-text {
+	font-size: 1rem;
+	line-height: 1.6;
+	font-style: italic;
+	color: #333;
+	margin: 0;
+}
+.testimonial-orange .testimonial-content {
+	border-color: #f17501;
+}
+.testimonial-orange .testimonial-content::after {
+	border-color: #f17501 transparent transparent transparent;
+}
+
+.testimonial-blue .testimonial-content {
+	border-color: #0254a0;
+}
+.testimonial-blue .testimonial-content::after {
+	border-color: #0254a0 transparent transparent transparent;
+}
+
+/* === User Info === */
+.testimonial-user {
+	margin-top: 40px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.testimonial-user img {
+	width: 72px;
+	height: 72px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 3px solid white;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	margin-bottom: 10px;
+}
+
+.user-name {
+	font-weight: bold;
+	font-size: 1rem;
+	margin: 0;
+}
+
+.location {
+	font-size: 0.9rem;
+	color: #888;
+	margin: 0;
+}
+
+/* === Arrow Buttons === */
+.arrow {
+	background: none;
+	border: none;
+	cursor: pointer;
+	position: relative;
+	z-index: 10;
+}
+
+.arrow img {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	background-color: #c7ddf1;
+	padding: 8px;
+	transition: transform 0.2s ease;
+}
+
+.arrow:hover img {
+	transform: scale(1.1);
+}
+
+/* === Responsive Styles === */
+@media (max-width: 1024px) {
+	.testimonial-carousel {
+		gap: 20px;
+	}
+
+	.testimonial-card {
+		width: 280px;
+	}
+}
+
+@media (max-width: 768px) {
+	.testimonial-card {
+		width: 260px;
+		scroll-snap-align: start;
+	}
+
+	.testimonial-user img {
+		width: 60px;
+		height: 60px;
+	}
+}
+
+/*==== MARK: Responsive HERO ====*/
 
 @media (max-width: 991px) {
 	.hero-buttons {

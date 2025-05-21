@@ -1,0 +1,268 @@
+<!-- MARK: Testimonials Section (Infinite Carousel) -->
+<section class="testimonials-section">
+	<div class="container">
+		<h3 class="section-subtitle">Our Review</h3>
+		<h2 class="section-title">What Our Customers Say?</h2>
+
+		<div class="carousel-wrapper">
+			<button class="arrow" id="prev">
+				<img src="images/testimonials/arrow-left.png" alt="Previous" />
+			</button>
+
+			<div class="carousel-container">
+				<div class="carousel" id="carousel">
+					<!-- Cloned Last 3 -->
+					<div class="testimonial-card">
+						<div class="testimonial-content testimonial-blue">
+							<p class="testimonial-text">
+								Extra testimonial 4 (hidden unless scrolled).
+							</p>
+						</div>
+						<div class="testimonial-user">
+							<img src="images/testimonials/person4.jpg" alt="Alex" />
+							<h5 class="user-name">Alex</h5>
+							<p class="location">Tecumseh, ON</p>
+						</div>
+					</div>
+					<div class="testimonial-card">
+						<div class="testimonial-content testimonial-blue">
+							<p class="testimonial-text">
+								Extra testimonial 5 (hidden unless scrolled).
+							</p>
+						</div>
+						<div class="testimonial-user">
+							<img src="images/testimonials/ma" alt="Maya" />
+							<h5 class="user-name">Maya</h5>
+							<p class="location">Amherstburg, ON</p>
+						</div>
+					</div>
+					<div class="testimonial-card">
+						<div class="testimonial-content">
+							<p class="testimonial-text">
+								Extra testimonial 6 (hidden unless scrolled).
+							</p>
+						</div>
+						<div class="testimonial-user">
+							<img src="images/testimonials/tom.png" alt="Tom" />
+							<h5 class="user-name">Tom</h5>
+							<p class="location">Leamington, ON</p>
+						</div>
+					</div>
+
+					<!-- Originals -->
+					<div class="testimonial-card">
+						<div class="testimonial-content">
+							<p class="testimonial-text">
+								My car isn’t new, so I need to get it looked at often. But these
+								guys? Never overcharge. I trust them completely.
+							</p>
+						</div>
+						<div class="testimonial-user">
+							<img src="images/testimonials/eugene.png" alt="Eugene" />
+							<h5 class="user-name">Eugene</h5>
+							<p class="location">Lasalle, ON</p>
+						</div>
+					</div>
+					<div class="testimonial-card">
+						<div class="testimonial-content testimonial-blue">
+							<p class="testimonial-text">
+								My AC stopped working. One mechanic said it was engine-related.
+								These guys fixed it right away. Honest and fast!
+							</p>
+						</div>
+						<div class="testimonial-user">
+							<img src="images/testimonials/dasha.png" alt="Dasha" />
+							<h5 class="user-name">Dasha</h5>
+							<p class="location">Riverside, Windsor ON</p>
+						</div>
+					</div>
+					<div class="testimonial-card">
+						<div class="testimonial-content">
+							<p class="testimonial-text">
+								I drive a BMW and I’m picky. They know these cars inside and
+								out. Highly recommend.
+							</p>
+						</div>
+						<div class="testimonial-user">
+							<img src="images/testimonials/jackie.png" alt="Jackie" />
+							<h5 class="user-name">Jackie</h5>
+							<p class="location">Red Deer, AB</p>
+						</div>
+					</div>
+					<div class="testimonial-card">
+						<div class="testimonial-content testimonial-blue">
+							<p class="testimonial-text">Extra testimonial 4 (again)</p>
+						</div>
+						<div class="testimonial-user">
+							<img src="images/testimonials/person4.jpg" alt="Alex" />
+							<h5 class="user-name">Alex</h5>
+							<p class="location">Tecumseh, ON</p>
+						</div>
+					</div>
+					<div class="testimonial-card">
+						<div class="testimonial-content testimonial-blue">
+							<p class="testimonial-text">Extra testimonial 5 (again)</p>
+						</div>
+						<div class="testimonial-user">
+							<img src="images/testimonials/ma" alt="Maya" />
+							<h5 class="user-name">Maya</h5>
+							<p class="location">Amherstburg, ON</p>
+						</div>
+					</div>
+					<div class="testimonial-card">
+						<div class="testimonial-content">
+							<p class="testimonial-text">Extra testimonial 6 (again)</p>
+						</div>
+						<div class="testimonial-user">
+							<img src="images/testimonials/tom.png" alt="Tom" />
+							<h5 class="user-name">Tom</h5>
+							<p class="location">Leamington, ON</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<button class="arrow" id="next">
+				<img src="images/testimonials/arrow-right.png" alt="Next" />
+			</button>
+		</div>
+	</div>
+</section>
+
+<style>
+	.carousel-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 20px;
+		overflow: hidden;
+	}
+
+	.carousel-container {
+		width: 990px;
+		overflow: hidden;
+	}
+
+	.carousel {
+		display: flex;
+		width: max-content;
+		transition: transform 0.4s ease;
+	}
+
+	.testimonial-card {
+		width: 300px;
+		margin-right: 30px;
+		background: white;
+		border: 3px solid #f17501;
+		border-radius: 10px;
+		padding: 20px;
+		flex-shrink: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		box-sizing: border-box;
+		text-align: left;
+	}
+
+	.testimonial-blue {
+		border-color: #0254a0;
+	}
+
+	.testimonial-text {
+		font-size: 1rem;
+		line-height: 1.6;
+		font-style: italic;
+		color: #333;
+	}
+
+	.testimonial-user {
+		margin-top: 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.testimonial-user img {
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
+		object-fit: cover;
+		border: 3px solid white;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		margin-bottom: 8px;
+	}
+
+	.user-name {
+		font-weight: bold;
+		font-size: 1rem;
+		margin: 0;
+	}
+
+	.location {
+		font-size: 0.9rem;
+		color: #888;
+		margin: 0;
+	}
+
+	.arrow {
+		background: none;
+		border: none;
+		cursor: pointer;
+		z-index: 10;
+	}
+
+	.arrow img {
+		width: 36px;
+		height: 36px;
+		border-radius: 50%;
+		background-color: #c7ddf1;
+		padding: 8px;
+		transition: transform 0.2s ease;
+	}
+
+	.arrow:hover img {
+		transform: scale(1.1);
+	}
+</style>
+
+<script>
+	const carousel = document.getElementById("carousel");
+	const cardWidth = 330; // 300 + 30 margin
+	let index = 3; // Start at the real first card
+
+	const updatePosition = () => {
+		carousel.style.transform = `translateX(-${cardWidth * index}px)`;
+	};
+
+	updatePosition();
+
+	document.getElementById("next").addEventListener("click", () => {
+		index++;
+		updatePosition();
+
+		if (index === 9) {
+			setTimeout(() => {
+				index = 3;
+				carousel.style.transition = "none";
+				updatePosition();
+				void carousel.offsetWidth;
+				carousel.style.transition = "transform 0.4s ease";
+			}, 400);
+		}
+	});
+
+	document.getElementById("prev").addEventListener("click", () => {
+		index--;
+		updatePosition();
+
+		if (index === 0) {
+			setTimeout(() => {
+				index = 6;
+				carousel.style.transition = "none";
+				updatePosition();
+				void carousel.offsetWidth;
+				carousel.style.transition = "transform 0.4s ease";
+			}, 400);
+		}
+	});
+</script>

@@ -27,7 +27,8 @@
 		<!-- MARK: Custom CSS -->
 		<link rel="stylesheet" href="styles.css" />
 	</head>
-	<body class="custom-body">
+	<body data-bs-spy="scroll" data-bs-target="#navbarNav" data-bs-offset="70" tabindex="0">
+
 		<!-- MARK: Navbar -->
 		<nav class="navbar navbar-expand-lg navbar-dark custom-nav px-3">
 			<a class="navbar-brand" href="#Home">
@@ -56,8 +57,9 @@
 					<li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
 					<li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Testimonials</a>
+						<a class="nav-link" href="#testimonials">Testimonials</a>
 					</li>
+					
 					<li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
 				</ul>
 			</div>
@@ -303,9 +305,68 @@
 				</div>
 			</section>
 
+			<!-- MARK: Testimonials Section -->
+			<section id="testimonials" class="testimonials-section">
+				<div class="container">
+					<h3 class="section-subtitle">Our Review</h3>
+					<h2 class="section-title">What Our Customers Say?</h2>
+			
+					<div class="row justify-content-center gx-3 gy-4">
+						<!-- Eugene -->
+						<div class="col-md-4 d-flex justify-content-center">
+							<div class="testimonial-card testimonial-orange">
+								<div class="testimonial-content">
+									<img src="images/testimonials/quote-left.png" alt="Quote" class="quote-icon" />
+									<p class="testimonial-text">
+										My car isn’t new, so I need to get it looked at pretty often — and I’m always worried about getting overcharged. But these guys? Never. They’re honest, explain everything, and always treat me with respect. I trust them completely.
+									</p>
+								</div>
+								<div class="testimonial-user">
+									<img src="images/testimonials/eugene.png" alt="Eugene" />
+									<h5 class="user-name">Eugene</h5>
+									<p class="location">Lasalle, ON</p>
+								</div>
+							</div>
+						</div>
+			
+						<!-- Dasha -->
+						<div class="col-md-4 d-flex justify-content-center">
+							<div class="testimonial-card testimonial-blue">
+								<div class="testimonial-content">
+									<img src="images/testimonials/quote-left.png" alt="Quote" class="quote-icon" />
+									<p class="testimonial-text">
+										My AC stopped working, so I went to one mechanic who told me it was an engine issue and gave me a huge quote. It didn’t feel right, so I called these guys — and I’m so glad I did! They fixed the AC without touching the engine, and the price was super reasonable. Bonus: they speak 4 languages! That really helped, because explaining car stuff in English isn’t easy for me.
+									</p>
+								</div>
+								<div class="testimonial-user">
+									<img src="images/testimonials/dasha.png" alt="Dasha" />
+									<h5 class="user-name">Dasha</h5>
+									<p class="location">Riverside, Windsor ON</p>
+								</div>
+							</div>
+						</div>
+			
+						<!-- Jackie -->
+						<div class="col-md-4 d-flex justify-content-center">
+							<div class="testimonial-card testimonial-orange">
+								<div class="testimonial-content">
+									<img src="images/testimonials/quote-left.png" alt="Quote" class="quote-icon" />
+									<p class="testimonial-text">
+										I drive a BMW and I’m super picky about who touches it. I actually came down from Alberta just to see these guys — that’s how good they are. They know these cars inside and out. Honestly, it’s hard to find people who understand BMWs this well and still treat you like family.
+									</p>
+								</div>
+								<div class="testimonial-user">
+									<img src="images/testimonials/jackie.png" alt="Jackie" />
+									<h5 class="user-name">Jackie</h5>
+									<p class="location">Red Deer, AB</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 			
 			
-
 		<!-- Bootstrap JS -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 		<!-- Your script -->
