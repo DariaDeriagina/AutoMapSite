@@ -204,7 +204,11 @@ html {
 
 /*==== Brand Logos ====*/
 .brands-slider {
-	background: linear-gradient(90deg, #ffffff, #e4e9f2, #ffffff);
+	background: linear-gradient(
+		90deg,
+		rgba(184, 209, 232, 0.88) 47.12%,
+		rgba(244, 244, 244, 0.88) 99.04%
+	);
 	overflow: hidden;
 	padding: 1rem 0;
 	height: 100px;
