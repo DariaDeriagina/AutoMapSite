@@ -63,6 +63,7 @@ html {
 	margin-right: 1rem;
 	font-weight: 400;
 	font-size: 1.2rem;
+	font-family: "Source Sans Pro", sans-serif;
 }
 
 .navbar .navbar-nav .nav-link.active {
@@ -70,13 +71,14 @@ html {
 	font-weight: 900;
 	font-size: 1.2rem;
 	letter-spacing: 0.3px;
+	font-family: "Source Sans Pro", sans-serif;
 }
 
 /*==== MARK: Buttons ====*/
 .call-btn {
 	background-color: #f17501;
 	border: none;
-	color: #fff;
+	color: black;
 	padding: 0.2rem 2rem;
 	font-family: "Bebas Neue", sans-serif;
 	font-size: 1.4rem;
@@ -93,7 +95,7 @@ html {
 .our-service-btn {
 	background-color: transparent;
 	border: 2px solid #f17501;
-	color: #f17501;
+	color: black;
 	padding: 0.2rem 2rem;
 	font-family: "Bebas Neue", sans-serif;
 	font-size: 1.4rem;
@@ -104,7 +106,7 @@ html {
 }
 .our-service-btn:hover {
 	background-color: #f17501;
-	color: #fff;
+	color: black;
 	transform: translateY(-2px);
 }
 
@@ -122,9 +124,9 @@ html {
 
 .hero-buttons {
 	display: flex;
+	justify-content: flex-start;
 	flex-wrap: nowrap; /* Prevent stacking */
 	gap: 1rem;
-	justify-content: center; /* Centered; change to flex-start if needed */
 	align-items: center;
 	flex-direction: row;
 	flex-shrink: 1;
@@ -157,9 +159,9 @@ html {
 
 .vector-dots {
 	position: absolute;
-	bottom: -20px;
+	bottom: -85px;
 	right: -20px;
-	width: 220px; /* adjust size */
+	width: 480px; /* adjust size */
 	z-index: 5; /* behind main photo */
 	opacity: 0.8;
 }
@@ -172,6 +174,14 @@ html {
 .icon {
 	width: 24px;
 	height: 24px;
+}
+.icon1 {
+	width: 24px;
+	height: 44px;
+}
+.icon2 {
+	width: 24px;
+	height: 34px;
 }
 
 /* Contact box centered and icon fix */
@@ -390,7 +400,7 @@ html {
 .section-subtitle {
 	color: #f17501;
 	font-weight: bold;
-	font-size: 1.2rem;
+	font-size: 1.8rem;
 	margin-bottom: 0.5rem;
 }
 
