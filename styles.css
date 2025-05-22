@@ -113,7 +113,7 @@ html {
 /*==== Hero Section ====*/
 
 .hero-title {
-	font-size: 3.5rem;
+	font-size: 3.8rem;
 	line-height: 1.2;
 	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -164,6 +164,23 @@ html {
 	width: 480px; /* adjust size */
 	z-index: 5; /* behind main photo */
 	opacity: 0.8;
+}
+
+@media (max-width: 991px) {
+	.vector-dots {
+		bottom: -10px;
+		right: 0;
+		width: 260px;
+	}
+}
+
+@media (max-width: 576px) {
+	.vector-dots {
+		position: absolute;
+		bottom: -5px;
+		right: -5px;
+		width: 220px;
+	}
 }
 .main-image {
 	position: relative;
