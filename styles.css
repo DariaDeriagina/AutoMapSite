@@ -651,6 +651,19 @@ a.text-decoration-none:hover {
 	transform: translateY(-2px);
 	color: #fff;
 }
+/* Contact Info color override */
+#contact a.text-decoration-none.text-dark {
+	color: #005aae !important;
+}
+
+#contact a.text-decoration-none.text-dark:hover {
+	opacity: 0.8;
+	color: #004080 !important;
+}
+
+.text-custom-blue {
+	color: #005aae;
+}
 
 /*==== MARK: Footer ====*/
 .footer-custom {
