@@ -569,6 +569,30 @@ html {
 	}
 }
 
+/*==== MARK: Video Blog ====*/
+#video-blog h2 {
+	font-weight: 700;
+	color: rgba(0, 90, 174, 1);
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+#video-blog p {
+	max-width: 600px;
+	margin: 0 auto 1rem auto;
+	display: block;
+	font-size: 1.5rem;
+	font-weight: 700;
+	font-family: "Bebas Neue", sans-serif;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	text-align: center;
+}
+#video-blog iframe {
+	border-radius: 0.75rem;
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
 /*==== MARK: Contact Us Section ====*/
 .text-orange {
 	color: #f05a00;
@@ -595,6 +619,32 @@ html {
 a.text-decoration-none:hover {
 	opacity: 0.8;
 	transition: opacity 0.3s ease;
+}
+.custom-call-btn {
+	width: 379px;
+	height: 63px;
+	background-color: #005aae;
+	border: none;
+	font-family: "Bebas Neue", sans-serif;
+	font-size: 32px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 63px;
+	letter-spacing: 0.5px;
+	color: #fff;
+	border-radius: 20px;
+	text-transform: uppercase;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+	transition: all 0.3s ease;
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+	padding: 0;
+}
+.custom-call-btn:hover {
+	background-color: #004080;
+	transform: translateY(-2px);
+	color: #fff;
 }
 
 /*==== MARK: Footer ====*/
