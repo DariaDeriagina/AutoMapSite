@@ -695,6 +695,20 @@ a.text-decoration-none:hover {
 .footer-copy {
 	font-size: 0.9rem;
 }
+@media (max-width: 576px) {
+	.footer-custom .list-inline {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		padding: 0;
+	}
+
+	.footer-custom .list-inline-item {
+		display: block;
+		margin: 0;
+		text-align: center;
+	}
+}
 
 /*==== MARK: Responsive HERO ====*/
 
