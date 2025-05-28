@@ -570,25 +570,30 @@ html {
 }
 
 /*==== MARK: Video Blog ====*/
-#video-blog h2 {
-	font-weight: 700;
-	color: rgba(0, 90, 174, 1);
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-}
-#video-blog p {
+.video-intro {
 	max-width: 600px;
 	margin: 0 auto 1rem auto;
 	display: block;
 	font-size: 1.5rem;
+	color: #f17501;
 	font-weight: 700;
 	font-family: "Bebas Neue", sans-serif;
 	letter-spacing: 1px;
 	text-transform: uppercase;
 	text-align: center;
 }
-#video-blog iframe {
+
+#video-blog h2,
+#blog h2 {
+	font-weight: 700;
+	color: rgba(0, 90, 174, 1);
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#video-blog iframe,
+#blog iframe {
 	border-radius: 0.75rem;
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 }
