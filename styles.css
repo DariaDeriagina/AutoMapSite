@@ -569,6 +569,65 @@ html {
 	}
 }
 
+/*==== MARK: Contact Us Section ====*/
+.text-orange {
+	color: #f05a00;
+}
+
+.btn-warning {
+	background-color: #f17501;
+	border: none;
+	color: black;
+	padding: 0.4rem 6rem;
+	font-family: "Bebas Neue", sans-serif;
+	font-size: 1.4rem;
+	letter-spacing: 1px;
+	border-radius: 20px;
+	text-transform: uppercase;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+	transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+	background-color: #d87e10;
+}
+
+a.text-decoration-none:hover {
+	opacity: 0.8;
+	transition: opacity 0.3s ease;
+}
+
+/*==== MARK: Footer ====*/
+.footer-custom {
+	background: linear-gradient(
+		90deg,
+		rgba(31, 21, 142, 1) 0%,
+		rgba(0, 90, 174, 1) 100%
+	);
+	color: rgba(245, 245, 245, 1);
+}
+
+.footer-link {
+	color: rgba(245, 245, 245, 1);
+	text-decoration: none;
+	font-weight: 600;
+	transition: color 0.3s;
+}
+
+.footer-link:hover {
+	color: #f7941d; /* Оранжевый акцент при наведении */
+}
+
+.footer-divider {
+	border-top: 1px solid rgba(245, 245, 245, 0.5);
+	margin: 1rem auto;
+	width: 90%;
+}
+
+.footer-copy {
+	font-size: 0.9rem;
+}
+
 /*==== MARK: Responsive HERO ====*/
 
 @media (max-width: 991px) {
