@@ -4,8 +4,19 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>AutoMap Car Services</title>
-		<!-- Favicon -->
-		<link rel="shortcut icon" href="./favicon.ico" />
+<!-- Basic SEO -->
+<title>AutoMap Car Services Windsor | Mechanic for BMW, Mercedes & Electric Vehicles</title>
+<meta name="description" content="AutoMap Car Services in Windsor offers trusted mechanics for BMW, Mercedes, and all vehicles. Specializing in electric car repairs, diagnostics, and reliable auto maintenance.">
+
+<!-- Keywords (not as powerful, but still safe to include) -->
+<meta name="keywords" content="Windsor mechanic, BMW repair Windsor, Mercedes service Windsor, electric car mechanic Windsor, hybrid repair, auto repair Windsor, AutoMap Car Services">
+
+<!-- Open Graph (Facebook & LinkedIn) -->
+<meta property="og:title" content="AutoMap Car Services Windsor – BMW, Mercedes & Electric Vehicle Specialists">
+<meta property="og:description" content="Trusted Windsor mechanics for BMW, Mercedes, and electric cars. AutoMap provides diagnostics, repairs, and reliable maintenance.">
+<meta property="og:image" content="https://yourdomain.com/images/mainImages/MainPhoto.svg">
+<meta property="og:url" content="https://yourdomain.com">
+<meta property="og:type" content="website">
 
 		<!-- Bootstrap -->
 		<link
@@ -23,6 +34,11 @@
 			href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&family=Source+Sans+3:ital@0;1&display=swap"
 			rel="stylesheet"
 		/>
+		<!-- Favicon -->
+		<link rel="apple-touch-icon" sizes="180x180" href="./favicon_io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon_io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./favicon_io/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
 
 		<!-- MARK: Custom CSS -->
 		<link rel="stylesheet" href="styles.css" />
@@ -66,67 +82,76 @@
 			</div>
 		</nav>
 
-		<!-- MARK: Hero Section -->
-		<section id="Home" class="container py-5">
-			<div class="row align-items-center">
-				<div class="col-md-6 text-center text-md-start">
-					<h1 class="display-5 fw-bold hero-title">
-						TRUSTED <span class="text-expert">EXPERTS</span><br />
-						FOR ALL YOUR <span class="text-expert">CAR</span> NEEDS
-					</h1>
-					<p class="lead hero-subtext">
-						Fast And Reliable Service For All Car Brands
-					</p>
-					<div class="hero-buttons">
-						<a href="tel:+12267588019" class="btn call-btn d-flex align-items-center">
-							<img
-								src="images/mainImages/CallButtonIcon.png"
-								class="me-2 icon"
-							/>
-							CALL NOW
-						</a>
-						<a href="#services" class="btn our-service-btn">OUR SERVICE</a>
-					</div>
-				</div>
-				<div class="col-md-6 text-center main-image-wrapper position-relative mb-5">
-					<img
-						src="images/mainImages/MainPhoto.jpg"
-						class="main-image"
-						alt="Mechanic"
-					/>
-					<img src="images/mainImages/Vector.png" class="vector-dots" alt="Dots" />
+<!-- MARK: Hero Section -->
+<section id="Home" class="container py-5">
+  <div class="row align-items-center">
+    <!-- Text/CTAs -->
+    <div class="col-md-6 text-center text-md-start">
+      <h1 class="display-5 fw-bold hero-title">
+        TRUSTED <span class="text-expert">EXPERTS</span><br />
+        FOR ALL YOUR <span class="text-expert">CAR</span> NEEDS
+      </h1>
+
+      <p class="lead hero-subtext">Fast And Reliable Service For All Car Brands</p>
+
+      <div class="hero-buttons">
+        <a href="tel:+12267588019" class="btn call-btn d-flex align-items-center" aria-label="Call AutoMap">
+          <img src="images/mainImages/CallButtonIcon.png" class="me-2 icon" alt="" />
+          CALL NOW
+        </a>
+        <a href="#services" class="btn our-service-btn" aria-label="View our services">OUR SERVICE</a>
+      </div>
+
+      <!-- Social Media in Hero -->
+      <div class="hero-social mt-3">
+        <a href="https://www.facebook.com/AutoMapCarServices" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="d-inline-flex align-items-center text-decoration-none">
+          <img src="images/footer/facebookIcon.png" alt="Facebook" class="social-icon me-2" />
+          <span class="hero-social-text">Follow us on Facebook</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Image -->
+    <div class="col-md-6 text-center main-image-wrapper position-relative mb-5">
+      <img src="images/mainImages/MainPhoto.svg" class="main-image" alt="Mechanic servicing a car" />
+      <img src="images/mainImages/Vector.png" class="vector-dots" alt="" />
+    </div>
+  </div>
+</section>
+
+
+<!-- Contact Info (centered, lives under the hero) -->
+<div class="text-center mb-4">
+  <div class="contact-box d-flex flex-column align-items-center">
+    <div class="d-flex align-items-center mb-2">
+      <img src="images/mainImages/LocationIcon.png" class="icon1" alt="" />
+      <a
+        href="https://maps.app.goo.gl/2GnYzqmhhxhjE1eg9?g_st=atm"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-decoration-none text-dark ms-2"
+      >
+        1425 Rankin Ave, N9B 3V3, Windsor, ON
+      </a>
+    </div>
+
+    <!-- Phones: column on mobile, row with space on desktop, staggered reveal -->
+    <div class="d-flex align-items-center contact-phones flex-column flex-md-row gap-2 gap-md-4">
+      <div class="d-flex align-items-center phone-item">
+        <img src="images/mainImages/PhoneIcon.png" class="icon2 me-2" alt="" />
+        <a href="tel:+12267588019" class="text-decoration-none text-dark">+1 226 758 8019</a>
+      </div>
+      <div class="d-flex align-items-center phone-item">
+        <img src="images/mainImages/PhoneIcon.png" class="icon2 me-2" alt="" />
+        <a href="tel:+12267588841" class="text-decoration-none text-dark">+1 226 758 8841</a>
+      </div>
+    </div>
+  </div>
 </div>
-				</div>
-			</div>
-		</div>
 
-		<!-- Contact Info (centered) -->
-		<div class="text-center mb-4">
-			<div class="contact-box d-flex flex-column align-items-center">
-				<div class="d-flex align-items-center mb-0">
-					<img
-						src="images/mainImages/LocationIcon.png"
-						class="icon1"
-						alt="Location"
-					/>
-					<a
-  href="https://maps.app.goo.gl/2GnYzqmhhxhjE1eg9?g_st=atm"
-  target="_blank"
-  rel="noopener noreferrer"
-  class="text-decoration-none text-dark ms-2"
->
-  1425 Rankin Ave, N9B 3V3, Windsor, ON
-</a>
-
-				</div>
-				<div class="d-flex align-items-center">
-					<img src="images/mainImages/PhoneIcon.png" class="icon2" alt="Phone" />
-					<a href="tel:+12267588019" class="text-decoration-none text-dark ms-2">
-						+1 226 758 8019
-					</a>
-				</div>
-			</div>
-		</div>
 
 		<!-- Floating Brand Logos -->
 		<div class="brands-slider">
@@ -169,46 +194,39 @@
 
 
 			<!-- MARK: AboutUs -->
-			<section id="about" class="about-us-section py-5">
-				<div class="container text-center">
-					<h3 class="text-center text-orange mb-1">The people behind the service</h3>
-					<h2 class="section-title">OUR TEAM</h2>
-					<div class="row justify-content-center align-items-start">
-			
-						<!-- Member 1 -->
-						<div class="col-md-4 mb-5">
-							<div class="team-card">
-								<img src="./images/aboutUsImages/Mechanic1Image.png" class="img-fluid team-photo" alt="Mohammad">
-								<h4 class="team-name">Mohammad</h4>
-								<p class="team-title">Mechanic</p>
-								<p class="team-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
-							</div>
-						</div>
-			
-						<!-- Member 2 -->
-						<div class="col-md-4 mb-5">
-							<div class="team-card">
-								<img src="./images/aboutUsImages/Mecanic2Image.png" class="img-fluid team-photo" alt="Bill McMillan">
-								<h4 class="team-name">Bill McMillan</h4>
-								<p class="team-title">Mechanic</p>
-								<p class="team-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-							</div>
-						</div>
-			
-						<!-- Member 3 with overlay -->
-						<div class="col-md-4 mb-5 position-relative">
-							<img src="images/aboutUsImages/BGImageAboutUs.png" class="about-vector" alt="Decorative vector">
-							<div class="team-card position-relative" style="z-index: 1;">
-								<img src="./images/aboutUsImages/Mechanic3Image.png" class="img-fluid team-photo" alt="Noah">
-								<h4 class="team-name">Naser</h4>
-								<p class="team-title">Mechanic</p>
-								<p class="team-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-							</div>
-						</div>
-			
-					</div>
-				</div>
-			</section>
+<section id="about" class="about-us-section pt-3 pb-3">
+  <div class="container text-center">
+  <h3 class="text-center text-orange mb-1 mt-4">The people behind the service</h3>
+    <h2 class="section-title">OUR TEAM</h2>
+
+    <div class="row g-4 justify-content-center align-items-start">
+      <!-- Member 1 -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="team-card">
+          <img src="./images/aboutUsImages/Mechanic1Image.png" class="img-fluid team-photo" alt="Mohammad">
+          <h4 class="team-name">Mohammad</h4>
+          <p class="team-title">Lead Mechanic &amp; Automotive Electrician</p>
+          <p class="team-text">
+            Mohammad is a highly qualified specialist with a Bachelor’s degree in electrical technology and Electromechanics engineering and has over seven years of experience in servicing hybrid and gas vehicles. His expertise covers complete vehicle maintenance, engine and transmission rebuilding, suspension system repairs, advanced electrical diagnostics, and programming of car modules. Known for precision and innovation, Mohammad ensures each vehicle is serviced to the highest industry standards.
+          </p>
+        </div>
+      </div>
+
+      <!-- Member 2 -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="team-card">
+          <img src="./images/aboutUsImages/Mecanic2Image.png" class="img-fluid team-photo" alt="Rami">
+          <h4 class="team-name">Rami</h4>
+          <p class="team-title">Head Mechanic</p>
+          <p class="team-text">
+            Rami leads the team with a Master’s degree in mechanical engineering and more than 30 years of experience in automotive repair. His extensive background includes 17 years as a trade instructor in technical colleges and 3 years as a head technician at Jordan Speed Centre, specializing in performance vehicles, drift, and rally cars. Combining technical mastery with leadership, Rami ensures that every repair and diagnostic procedure meets premium service expectations.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 
 
@@ -305,65 +323,84 @@
 			</section>
 
 			<!-- MARK: Testimonials Section -->
-			<section id="testimonials" class="testimonials-section">
-				<div class="container">
-						<h3 class="text-center text-orange mb-1">Our review</h3>
-					<h2 class="section-title">What Our Customers Say?</h2>
 			
-					<div class="row justify-content-center gx-3 gy-4">
-						<!-- Eugene -->
-						<div class="col-md-4 d-flex justify-content-center">
-							<div class="testimonial-card testimonial-orange">
-								<div class="testimonial-content">
-									<img src="images/testimonials/quote-left.png" alt="Quote" class="quote-icon" />
-									<p class="testimonial-text">
-										My car isn’t new, so I need to get it looked at pretty often — and I’m always worried about getting overcharged. But these guys? Never. They’re honest, explain everything, and always treat me with respect. I trust them completely.
-									</p>
-								</div>
-								<div class="testimonial-user">
-									<img src="images/testimonials/eugene.png" alt="Eugene" />
-									<h5 class="user-name">Eugene</h5>
-									<p class="location">Lasalle, ON</p>
-								</div>
-							</div>
-						</div>
-			
-						<!-- Dasha -->
-						<div class="col-md-4 d-flex justify-content-center">
-							<div class="testimonial-card testimonial-blue">
-								<div class="testimonial-content">
-									<img src="images/testimonials/quote-left.png" alt="Quote" class="quote-icon" />
-									<p class="testimonial-text">
-										My AC stopped working, so I went to one mechanic who told me it was an engine issue and gave me a huge quote. It didn’t feel right, so I called these guys — and I’m so glad I did! They fixed the AC without touching the engine, and the price was super reasonable. Bonus: they speak 4 languages! That really helped, because explaining car stuff in English isn’t easy for me.
-									</p>
-								</div>
-								<div class="testimonial-user">
-									<img src="images/testimonials/dasha.png" alt="Dasha" />
-									<h5 class="user-name">Dasha</h5>
-									<p class="location">Riverside, Windsor ON</p>
-								</div>
-							</div>
-						</div>
-			
-						<!-- Jackie -->
-						<div class="col-md-4 d-flex justify-content-center">
-							<div class="testimonial-card testimonial-orange">
-								<div class="testimonial-content">
-									<img src="images/testimonials/quote-left.png" alt="Quote" class="quote-icon" />
-									<p class="testimonial-text">
-										I drive a BMW and I’m super picky about who touches it. I actually came down from Alberta just to see these guys — that’s how good they are. They know these cars inside and out. Honestly, it’s hard to find people who understand BMWs this well and still treat you like family.
-									</p>
-								</div>
-								<div class="testimonial-user">
-									<img src="images/testimonials/jackie.png" alt="Jackie" />
-									<h5 class="user-name">Jackie</h5>
-									<p class="location">Red Deer, AB</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
+<section id="testimonials" class="testimonials-section">
+  <div class="container">
+    <h3 class="text-center text-orange mb-1">Our Reviews</h3>
+    <h2 class="section-title">What Our Customers Say</h2>
+
+    <div class="reviews-marquee">
+      <div class="reviews-track">
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">The best car service in Windsor! Our family and friends vehicles are serviced only here! Thank you Rami and Mohammad!</p>
+          <span class="review-name">Maruf Mahmudov</span>
+        </article>
+
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">Rami and Mohammad are the only 2 mechanics I fully trust 100% in Windsor. They strive to provide the best and most honest service.</p>
+          <span class="review-name">Ibrahim Alkeilani</span>
+        </article>
+
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">Excellent service and very reasonable prices. Special thanks to Mohammad!</p>
+          <span class="review-name">Asif Javed</span>
+        </article>
+
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">They are the best—very attentive, experienced, calm, and the prices are reasonable. Thank you very much.</p>
+          <span class="review-name">Abir Fara</span>
+        </article>
+
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">The guys are doing a great job. Thanks to them for their efforts!</p>
+          <span class="review-name">Sviatoslav Sokolovskyi</span>
+        </article>
+
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">Reasonable prices and honest mechanic.</p>
+          <span class="review-name">Saad Khan</span>
+        </article>
+
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">Great service and excellent prices. Finally found a trustworthy mechanic!</p>
+          <span class="review-name">Almin</span>
+        </article>
+
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">Good, fast, best price…</p>
+          <span class="review-name">Mykola Skhab</span>
+        </article>
+
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">Very professional technicians and huge experience in BMW cars.</p>
+          <span class="review-name">Ahmad Belbeissy</span>
+        </article>
+
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">My car isn’t new, so I need to get it looked at often. These guys are honest, explain everything, and always treat me with respect.</p>
+          <span class="review-name">Eugene</span>
+        </article>
+
+        <article class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">Another mechanic told me it was an engine issue and gave me a huge quote. Here they fixed my AC without touching the engine—and the price was super reasonable.</p>
+          <span class="review-name">Dasha</span>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 
 			<!-- MARK: VIDEO BLOG -->
@@ -397,13 +434,21 @@
     <h3 class="text-center text-orange mb-1">Get n touch</h3>
   			<h2 class="section-title">Contact us</h2>
 
-   <div class="row my-4 justify-content-center">
-  <div class="col-12 col-md-10">
+  <div class="row my-4 justify-content-center">
+  <div class="col-12 col-md-10 fullbleed-xs">
     <div class="ratio ratio-16x9">
-     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2951.3434643696382!2d-83.05385582322359!3d42.29253617119918!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883b2d0042008f5f%3A0x88daca2ddb35903!2sAutoMap%20Car%20Services!5e0!3m2!1sen!2sca!4v1748461089052!5m2!1sen!2sca" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2951.3434643696382!2d-83.05385582322359!3d42.29253617119918!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883b2d0042008f5f%3A0x88daca2ddb35903!2sAutoMap%20Car%20Services!5e0!3m2!1sen!2sca!4v1748461089052!5m2!1sen!2sca"
+        style="border:0"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+        title="AutoMap location"
+      ></iframe>
     </div>
   </div>
 </div>
+
 
 
     <div class="row text-center align-items-center">
@@ -412,7 +457,7 @@
   <a href="tel:+12267588019" class="text-decoration-none text-dark">
     <img src="./images/contactUs/PhoneIconContact.png" alt="Phone" style="width: 40px;" />
     <p class="fw-bold mt-2 mb-0">Call Us:</p>
-    <small class="d-block text-muted">Mon - Sat: 9am - 5pm</small>
+    <small class="d-block text-muted">Mon - Sat: 9am - 5:30pm</small>
    <p class="fw-bold mt-1" style="color: #005AAE;">
   +1 226 758 8019
 </p>
@@ -434,7 +479,7 @@
      class="text-decoration-none text-dark">
     <img src="./images/contactUs/LocationIconContact.png" alt="Location" style="width: 40px;" />
     <p class="fw-bold mt-2 mb-0">Address:</p>
-    <small class="d-block text-muted">Mon - Sat: 9am - 5pm</small>
+    <small class="d-block text-muted">Mon - Sat: 9am - 5:30pm</small>
     <p class="fw-bold mt-1" style="color: #005AAE;">
   1425 Rankin Ave,<br />
   Windsor, ON
@@ -443,8 +488,9 @@
 </div>
 </section>
 
-<!-- FOOTER -->
-			<footer class="footer-custom py-4">
+<!-- MARK: FOOTER -->
+
+<footer class="footer-custom py-4">
   <div class="container text-center">
     <img src="images/mainImages/LogoAutoMap.png" alt="AutoMap Logo" style="height: 60px;" class="mb-3" />
 
@@ -453,16 +499,34 @@
       <li class="list-inline-item mx-3"><a href="#about" class="footer-link">About Us</a></li>
       <li class="list-inline-item mx-3"><a href="#services" class="footer-link">Services</a></li>
       <li class="list-inline-item mx-3"><a href="#testimonials" class="footer-link">Testimonials</a></li>
-			<li class="list-inline-item mx-3"><a href="#blog" class="footer-link">Video Blog</a></li>
+      <li class="list-inline-item mx-3"><a href="#blog" class="footer-link">Video Blog</a></li>
       <li class="list-inline-item mx-3"><a href="#contact" class="footer-link">Contact Us</a></li>
     </ul>
+		<!-- Social Media -->
+<div class="social-icons mt-3">
+  <a href="https://www.facebook.com/AutoMapCarServices" target="_blank" rel="noopener noreferrer">
+    <img src="images/footer/facebookIcon.png" alt="Facebook" class="social-icon" />
+  </a>
+</div>
 
     <hr class="footer-divider" />
 
-  <p class="footer-copy text-center mb-0">© 2025 Automap. All rights reserved. Website by <a href="https://dash-dev.net" target="_blank" class="footer-link">DashDev</a>.</p>
+    <!-- Two separate lines -->
+    <p class="footer-copy text-center mb-1">
+      © 2025 Automap. All rights reserved.
+    </p>
+    <p class="footer-copy text-center mb-0">
+  Design &amp; Developed by 
+  <a href="https://dash-dev.net" target="_blank" class="footer-link">
+    <img src="images/footer/dashDevLogo.png" 
+         alt="DashDev Logo" 
+         class="dashdev-logo invert" />
+  </a>
+</p>
 
   </div>
 </footer>
+
 
 			
 		<!-- Bootstrap JS -->

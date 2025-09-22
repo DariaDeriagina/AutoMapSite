@@ -110,7 +110,7 @@ html {
 	transform: translateY(-2px);
 }
 
-/*==== Hero Section ====*/
+/*====MARK:  Hero Section ====*/
 
 .hero-title {
 	font-size: 3.8rem;
@@ -257,6 +257,94 @@ html {
 	height: 40px;
 	animation: floatY 3s ease-in-out infinite alternate;
 	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+/* Tighten space below Hero */
+#Home.container {
+	padding-bottom: 0.75rem !important; /* was py-5 (~3rem) */
+}
+@media (min-width: 768px) {
+	#Home.container {
+		padding-bottom: 0.5rem !important;
+	}
+}
+
+/* Reduce the image wrapper's mb-5 without editing HTML */
+.main-image-wrapper.mb-5 {
+	margin-bottom: 0.75rem !important; /* mobile */
+}
+@media (min-width: 768px) {
+	.main-image-wrapper.mb-5 {
+		margin-bottom: 0 !important; /* desktop: no extra gap */
+	}
+}
+
+/* Optional: bring the contact box slightly closer */
+.text-center.mb-4 > .contact-box {
+	margin-top: -0.25rem; /* subtle pull-up; adjust to taste */
+}
+
+/* Ensure the dotted vector never forces layout */
+.vector-dots {
+	pointer-events: none;
+	z-index: 1; /* hero art stays behind */
+}
+/* ==== Hero: Social (Facebook) ==== */
+.hero-social {
+	display: flex;
+	justify-content: center; /* center on mobile */
+}
+@media (min-width: 768px) {
+	.hero-social {
+		justify-content: flex-start;
+	} /* align with text on desktop */
+}
+
+.hero-social a {
+	display: inline-flex;
+	align-items: center;
+	text-decoration: none;
+	outline: none;
+}
+
+.hero-social .social-icon {
+	width: 28px;
+	height: 28px;
+	transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.hero-social .social-icon:hover {
+	transform: scale(1.15);
+	filter: brightness(1.2);
+}
+
+.hero-social .hero-social-text {
+	font-size: 1rem;
+	font-weight: 600;
+	color: #005aae; /* brand blue */
+	transition: color 0.3s ease;
+}
+
+/* Hover/Focus states for accessibility & feedback */
+.hero-social a:hover .hero-social-text,
+.hero-social a:focus .hero-social-text,
+.hero-social a:focus-visible .hero-social-text {
+	color: #f17501; /* orange accent */
+}
+
+.hero-social a:focus-visible {
+	outline: 2px solid #f17501;
+	outline-offset: 3px;
+}
+
+/* (Optional) Make hero title responsive so it never overflows on small phones */
+.hero-title {
+	font-size: clamp(2rem, 5vw + 1rem, 3.8rem);
+}
+/* Extra margin for Facebook link on mobile */
+@media (max-width: 767.98px) {
+	.hero-social {
+		margin-bottom: 1.5rem; /* push it down a bit */
+	}
 }
 
 /*==== Animations ====*/
@@ -408,165 +496,116 @@ html {
 }
 
 /* === MARK: Testimonials Section === */
-.testimonials-section {
-	padding: 60px 20px;
-	background-color: #f1f2f4;
-	text-align: center;
-}
-
-.section-subtitle {
-	color: #f17501;
-	font-weight: bold;
-	font-size: 1.8rem;
-	margin-bottom: 0.5rem;
-}
-
-.section-title {
-	color: #0254a0;
-	font-size: 2.5rem;
-	font-weight: bold;
-	margin-bottom: 3rem;
-	text-transform: uppercase;
-}
-
-/*  Testimonials */
-.testimonial-card {
-	width: 300px;
-	flex-shrink: 0;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	transition: transform 0.4s ease, box-shadow 0.3s ease;
-}
-
-/* === Quote Box === */
-.testimonial-content {
+.reviews-marquee {
+	overflow: hidden;
 	position: relative;
-	background-color: #fff;
-	border: 3px solid #f17501;
-	border-radius: 10px;
-	padding: 30px 20px;
-	text-align: left;
-	min-height: 220px;
-	box-sizing: border-box;
+	mask-image: linear-gradient(
+		to right,
+		transparent 0,
+		#000 40px,
+		#000 calc(100% - 40px),
+		transparent 100%
+	);
+	-webkit-mask-image: linear-gradient(
+		to right,
+		transparent 0,
+		#000 40px,
+		#000 calc(100% - 40px),
+		transparent 100%
+	);
 }
 
-.testimonial-content.testimonial-blue {
+.reviews-track {
+	display: flex;
+	gap: 16px;
+	width: max-content;
+	animation: reviewsScroll 45s linear infinite;
+}
+.reviews-marquee:hover .reviews-track {
+	animation-play-state: paused;
+}
+
+@keyframes reviewsScroll {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-50%);
+	}
+}
+
+.review-card {
+	flex: 0 0 clamp(260px, 40vw, 420px);
+	background: #fff;
+	border: 2px solid #f17501;
+	border-radius: 12px;
+	padding: 18px 16px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.review-card:nth-child(2n) {
 	border-color: #0254a0;
 }
 
-.quote-icon {
-	width: 24px;
-	height: 24px;
-	margin-bottom: 10px;
+.review-stars {
+	font-size: 14px;
+	color: #f59e0b;
+	margin-bottom: 8px;
 }
-/* === Quote Bubble Arrow === */
-.testimonial-content::after {
-	content: "";
-	position: absolute;
-	bottom: -12px;
-	left: 50%;
-	transform: translateX(-50%);
-	border-style: solid;
-	border-width: 12px 12px 0 12px;
-	border-color: #f17501 transparent transparent transparent;
-}
-
-/* === Quote Text === */
-.testimonial-text {
-	font-size: 1rem;
-	line-height: 1.6;
-	font-style: italic;
+.review-text {
+	font-size: 0.95rem;
 	color: #333;
-	margin: 0;
-}
-.testimonial-orange .testimonial-content {
-	border-color: #f17501;
-}
-.testimonial-orange .testimonial-content::after {
-	border-color: #f17501 transparent transparent transparent;
-}
-
-.testimonial-blue .testimonial-content {
-	border-color: #0254a0;
-}
-.testimonial-blue .testimonial-content::after {
-	border-color: #0254a0 transparent transparent transparent;
-}
-
-/* === User Info === */
-.testimonial-user {
-	margin-top: 40px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-.testimonial-user img {
-	width: 72px;
-	height: 72px;
-	border-radius: 50%;
-	object-fit: cover;
-	border: 3px solid white;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	line-height: 1.6;
 	margin-bottom: 10px;
+	font-style: italic;
 }
-
-.user-name {
-	font-weight: bold;
-	font-size: 1rem;
-	margin: 0;
-}
-
-.location {
+.review-name {
+	font-weight: 700;
+	color: #283756;
 	font-size: 0.9rem;
-	color: #888;
-	margin: 0;
+}
+/* 1) Center the big heading in testimonials */
+.testimonials-section .section-title {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
 }
 
-/* === Arrow Buttons === */
-.arrow {
-	background: none;
-	border: none;
-	cursor: pointer;
-	position: relative;
-	z-index: 10;
+/* 2) Slow down the auto-scroll (desktop slower than mobile) */
+.reviews-track {
+	/* default speed (mobile/tablet) */
+	animation-duration: 65s !important;
 }
 
-.arrow img {
-	width: 36px;
-	height: 36px;
-	border-radius: 50%;
-	background-color: #c7ddf1;
-	padding: 8px;
-	transition: transform 0.2s ease;
-}
-
-.arrow:hover img {
-	transform: scale(1.1);
-}
-
-/* === Responsive Styles === */
-@media (max-width: 1024px) {
-	.testimonial-carousel {
-		gap: 20px;
-	}
-
-	.testimonial-card {
-		width: 280px;
+@media (min-width: 992px) {
+	/* desktop: even slower */
+	.reviews-track {
+		animation-duration: 90s !important;
 	}
 }
 
-@media (max-width: 768px) {
-	.testimonial-card {
-		width: 260px;
-		scroll-snap-align: start;
+/* Optional: if users prefer reduced motion, stop it */
+@media (prefers-reduced-motion: reduce) {
+	.reviews-track {
+		animation: none !important;
 	}
+}
 
-	.testimonial-user img {
-		width: 60px;
-		height: 60px;
-	}
+/* (optional) soften edge fade so text isn't too hidden at sides */
+.reviews-marquee {
+	mask-image: linear-gradient(
+		to right,
+		transparent 0,
+		#000 24px,
+		#000 calc(100% - 24px),
+		transparent 100%
+	);
+	-webkit-mask-image: linear-gradient(
+		to right,
+		transparent 0,
+		#000 24px,
+		#000 calc(100% - 24px),
+		transparent 100%
+	);
 }
 
 /*==== MARK: Video Blog ====*/
@@ -695,6 +734,36 @@ a.text-decoration-none:hover {
 .footer-copy {
 	font-size: 0.9rem;
 }
+/* DashDev logo inside footer */
+.footer-custom .dashdev-logo {
+	height: 18px;
+	margin-bottom: 6px;
+	vertical-align: middle;
+	transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Hover effect: brighten + slight zoom */
+.footer-custom .footer-link:hover .dashdev-logo {
+	transform: scale(1.1);
+	filter: brightness(1.3);
+}
+.social-icons {
+	margin-top: 1rem;
+}
+
+.social-icons .social-icon {
+	width: 28px;
+	height: 28px;
+	margin: 0 6px;
+	transition: transform 0.3s ease, filter 0.3s ease;
+	filter: brightness(0) invert(1); /* makes it white for dark footer */
+}
+
+.social-icons .social-icon:hover {
+	transform: scale(1.15);
+	filter: brightness(1.5);
+}
+
 @media (max-width: 576px) {
 	.footer-custom .list-inline {
 		display: flex;
@@ -726,3 +795,23 @@ a.text-decoration-none:hover {
 		padding-bottom: 20px;
 	}
 }
+/* MARK: Stack phones on mobile, row with space on desktop */
+.contact-phones {
+	gap: 0.25rem;
+}
+@media (max-width: 767.98px) {
+	.contact-phones {
+		flex-direction: column;
+		align-items: center;
+	}
+}
+@media (min-width: 768px) {
+	.contact-phones {
+		flex-direction: row;
+		gap: 1.5rem;
+	}
+}
+/* Keep section titles from hiding under the sticky nav */
+section[id] {
+	scroll-margin-top: 100px;
+} /* match NAV_OFFSET */
