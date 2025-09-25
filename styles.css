@@ -608,33 +608,60 @@ html {
 	);
 }
 
-/*==== MARK: Video Blog ====*/
+/* ==== MARK: Video Blog ==== */
 .video-intro {
-	max-width: 600px;
-	margin: 0 auto 1rem auto;
+	max-width: 640px;
+	margin: 0 auto 1rem;
 	display: block;
-	font-size: 1.5rem;
-	color: #f17501;
-	font-weight: 700;
-	font-family: "Bebas Neue", sans-serif;
+	font: 700 1.5rem "Bebas Neue", sans-serif;
 	letter-spacing: 1px;
 	text-transform: uppercase;
+	color: #f17501;
 	text-align: center;
 }
-
-#video-blog h2,
 #blog h2 {
 	font-weight: 700;
-	color: rgba(0, 90, 174, 1);
+	color: #005aae;
 	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
+	margin: 0 auto;
 }
 
-#video-blog iframe,
-#blog iframe {
-	border-radius: 0.75rem;
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+/* Thumbnail card (no black background, true 16:9) */
+.video-thumb {
+	position: relative;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+	max-width: 900px;
+	margin: 0 auto;
+}
+.video-thumb a {
+	display: block;
+	line-height: 0;
+} /* remove gaps */
+.video-thumb img {
+	width: 100%;
+	aspect-ratio: 16/9; /* keep 16:9 */
+	object-fit: cover;
+	display: block;
+	border: 0;
+}
+
+/* Play badge */
+.play-badge {
+	position: absolute;
+	inset: auto 16px 16px auto; /* bottom-right */
+	background: rgba(0, 0, 0, 0.55);
+	color: #fff;
+	padding: 0.35rem 0.55rem;
+	border-radius: 8px;
+	font-weight: 700;
+	font-size: 0.95rem;
+	transition: transform 0.2s ease, background 0.2s ease;
+}
+.video-thumb:hover .play-badge {
+	transform: scale(1.05);
+	background: rgba(0, 0, 0, 0.7);
 }
 
 /*==== MARK: Contact Us Section ====*/
