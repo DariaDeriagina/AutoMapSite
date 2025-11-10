@@ -129,3 +129,46 @@ clearBtn.addEventListener("click", () => {
 
 renderTable();
 getTotals();
+// Backup to JSON
+document.getElementById("exportJson").addEventListener("click", () => {
+	const data = JSON.stringify(entries, null, 2);
+	const blob = new Blob([data], { type: "application/json" });
+	const url = URL.createObjectURL(blob);
+	const a = document.createElement("a");
+	a.href = url;
+	a.download = `automap_log_${new Date().toISOString().split("T")[0]}.json`;
+	a.click();
+	URL.revokeObjectURL(url);
+});
+
+// Import from JSON (merge or replace)
+document.getElementById("importJson").addEventListener("change", (e) => {
+	const file = e.target.files?.[0];
+	if (!file) return;
+	const reader = new FileReader();
+	reader.onload = () => {
+		try {
+			const incoming = JSON.parse(reader.result);
+			if (!Array.isArray(incoming)) throw new Error("Bad format");
+			const modeReplace = confirm(
+				"OK = заменить текущие данные. Cancel = объединить."
+			);
+			if (modeReplace) {
+				entries = incoming;
+			} else {
+				// объединение (по дате+сервис+цена), без дублей
+				const key = (x) => `${x.date}__${x.service}__${x.price}`;
+				const map = new Map(entries.map((e) => [key(e), e]));
+				for (const e of incoming) map.set(key(e), e);
+				entries = [...map.values()];
+			}
+			localStorage.setItem("logEntries", JSON.stringify(entries));
+			renderTable();
+			getTotals();
+			alert("Импорт завершён.");
+		} catch (err) {
+			alert("Ошибка импорта: " + err.message);
+		}
+	};
+	reader.readAsText(file);
+});
