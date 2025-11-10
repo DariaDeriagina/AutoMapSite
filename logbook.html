@@ -135,8 +135,13 @@
 		</div>
 
 		<!-- Important: auth.js BEFORE logbook.js -->
-		<script src="auth.js"></script>
+		<!-- Firebase first (module exposes window.fs / window.firebaseDB / window.firebaseAuth) -->
 		<script type="module" src="firebase.js"></script>
+
+		<!-- Gate (locks/unlocks the app) -->
+		<script src="auth.js"></script>
+
+		<!-- App logic (uses window.fs/db from firebase.js) -->
 		<script src="logbook.js"></script>
 	</body>
 </html>
