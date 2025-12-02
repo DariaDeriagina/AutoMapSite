@@ -4,7 +4,6 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>AutoMap Logbook</title>
-		<!-- Favicon -->
 		<link rel="shortcut icon" href="./favicon.ico" />
 		<meta name="robots" content="noindex,nofollow" />
 
@@ -15,13 +14,9 @@
 		<link rel="stylesheet" href="logbook.css" />
 	</head>
 	<body>
-		<!-- JS gate renders here -->
 		<div id="gate"></div>
 
-		<!-- Everything below is hidden until unlocked -->
 		<div id="app" hidden>
-			<!-- Custom Navbar Strip -->
-			<!-- Top logo bar -->
 			<nav class="navbar navbar-expand-lg">
 				<a class="navbar-brand text-white fw-bold" href="#">
 					<img
@@ -52,7 +47,6 @@
 							id="service"
 							class="form-control mt-2"
 							placeholder="Or enter custom service name"
-							required
 						/>
 					</div>
 					<div class="col-md-4">
@@ -134,16 +128,8 @@
 			</div>
 		</div>
 
-		<!-- Important: auth.js BEFORE logbook.js -->
-		<!-- Firebase first (module exposes window.fs / window.firebaseDB / window.firebaseAuth) -->
-		<!-- Firebase FIRST -->
-		<!-- Firebase FIRST -->
 		<script type="module" src="/firebase.app.js?v=7"></script>
-
-		<!-- Gate -->
 		<script src="/auth.js?v=7"></script>
-
-		<!-- Logbook -->
 		<script src="/logbook.js?v=7"></script>
 	</body>
 </html>

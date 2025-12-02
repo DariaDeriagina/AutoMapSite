@@ -1,3 +1,5 @@
+// logbook.js — AutoMap Logbook UI
+
 (function () {
 	function initLogbook() {
 		const db = window.firebaseDB;
@@ -16,9 +18,13 @@
 		const serviceInput = document.getElementById("service");
 		const tableBody = document.getElementById("logTable");
 
+		const totalDayEl = document.getElementById("totalDay");
+		const totalWeekEl = document.getElementById("totalWeek");
+		const totalMonthEl = document.getElementById("totalMonth");
+
 		const entriesCol = fs.collection(db, "entries");
 
-		// --- Add entry ---
+		// Add entry
 		form.addEventListener("submit", async (e) => {
 			e.preventDefault();
 
@@ -26,7 +32,10 @@
 				serviceInput.value.trim() || serviceSelect.value.trim() || "";
 			const price = Number(priceInput.value);
 
-			if (!service || !price) return;
+			if (!service || !price) {
+				console.warn("Service or price missing");
+				return;
+			}
 
 			await fs.addDoc(entriesCol, {
 				service,
@@ -39,31 +48,88 @@
 			serviceSelect.value = "";
 		});
 
-		// --- Listen for entries ---
+		// Clear form
+		document.getElementById("clearForm").addEventListener("click", () => {
+			serviceInput.value = "";
+			priceInput.value = "";
+			serviceSelect.value = "";
+		});
+
+		// Listen for entries
 		const q = fs.query(entriesCol, fs.orderBy("createdAt", "desc"));
 		fs.onSnapshot(q, (snapshot) => {
 			tableBody.innerHTML = "";
+
+			const now = new Date();
+			const startOfDay = new Date(
+				now.getFullYear(),
+				now.getMonth(),
+				now.getDate()
+			);
+			const startOfWeek = new Date(startOfDay);
+			startOfWeek.setDate(startOfWeek.getDate() - startOfDay.getDay()); // Sunday
+			const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+			let sumDay = 0;
+			let sumWeek = 0;
+			let sumMonth = 0;
+
 			snapshot.forEach((docSnap) => {
 				const data = docSnap.data();
 				const tr = document.createElement("tr");
 
-				const date = data.createdAt?.toDate
-					? data.createdAt.toDate().toLocaleDateString()
-					: "";
+				let dateStr = "";
+				let createdAt = null;
+				if (data.createdAt?.toDate) {
+					createdAt = data.createdAt.toDate();
+					dateStr = createdAt.toLocaleDateString();
+				}
+
+				const price = data.price || 0;
+
+				if (createdAt) {
+					if (createdAt >= startOfDay) sumDay += price;
+					if (createdAt >= startOfWeek) sumWeek += price;
+					if (createdAt >= startOfMonth) sumMonth += price;
+				}
 
 				tr.innerHTML = `
-					<td>${date}</td>
+					<td>${dateStr}</td>
 					<td>${data.service || ""}</td>
-					<td>$${data.price || 0}</td>
-					<td></td>
+					<td>$${price}</td>
+					<td>
+						<button class="btn btn-sm btn-danger" data-id="${docSnap.id}">
+							Delete
+						</button>
+					</td>
 				`;
 
 				tableBody.appendChild(tr);
 			});
+
+			totalDayEl.textContent = `Today: $${sumDay}`;
+			totalWeekEl.textContent = `This Week: $${sumWeek}`;
+			totalMonthEl.textContent = `This Month: $${sumMonth}`;
 		});
+
+		// Delete
+		tableBody.addEventListener("click", async (e) => {
+			const btn = e.target.closest("button[data-id]");
+			if (!btn) return;
+			const id = btn.getAttribute("data-id");
+			await fs.deleteDoc(fs.doc(db, "entries", id));
+		});
+
+		// Stubs (чтобы кнопки не ломали js)
+		window.clearPeriod = function (period) {
+			console.log("clearPeriod stub:", period);
+		};
+
+		window.exportCSV = function () {
+			console.log("exportCSV stub");
+		};
 	}
 
-	// If firebase already loaded:
 	if (window.firebaseDB && window.fs) {
 		initLogbook();
 	} else {
