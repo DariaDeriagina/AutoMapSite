@@ -388,3 +388,27 @@
 		start();
 	}
 })();
+document.addEventListener("DOMContentLoaded", () => {
+	function highlightHeroTitle() {
+		const el = document.getElementById("heroTitle");
+		if (!el) return;
+
+		// Берём только текст (без старых span-ов)
+		const raw = el.textContent.trim();
+		if (!raw) return;
+
+		let html = raw.replace(/\r?\n/g, "<br />");
+
+		html = html
+			.replace(/EXPERTS/gi, '<span class="text-expert">$&</span>')
+			.replace(/CAR/gi, '<span class="text-expert">$&</span>');
+
+		el.innerHTML = html;
+	}
+
+	// 1) сразу после загрузки
+	highlightHeroTitle();
+
+	// 2) ещё раз чуть позже — вдруг CMS успел перезаписать текст после Firebase
+	setTimeout(highlightHeroTitle, 800);
+});
