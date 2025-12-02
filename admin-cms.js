@@ -1,7 +1,7 @@
-// admin-cms.js — AutoMap CMS editor (back-office + passcode change)
+// admin-cms.js — AutoMap CMS editor (content + passcode change)
 
 (function () {
-	// Поля в Firestore и соответствующие поля формы (id: cms-...)
+	// Поля в Firestore и соответствующие поля формы (id="cms-...")
 	const FIELDS = [
 		"heroTitle",
 		"heroSubtitle",
@@ -62,9 +62,12 @@
 		"footerCopyright",
 	];
 
-	// тут будем хранить то, что загрузили из Firestore при открытии
+	// Оригинальные данные cms/home, загруженные при открытии
 	let originalData = {};
 
+	// =====================================================
+	// Инициализация CMS (контент сайта)
+	// =====================================================
 	async function initAdminCMS() {
 		const db = window.firebaseDB;
 		const fs = window.fs;
@@ -87,7 +90,7 @@
 			const snap = await fs.getDoc(docRef);
 			if (snap.exists()) {
 				const data = snap.data() || {};
-				originalData = data; // ✅ запоминаем оригинал
+				originalData = data;
 
 				FIELDS.forEach((field) => {
 					const el = document.getElementById("cms-" + field);
@@ -118,30 +121,27 @@
 				if (!el) return;
 
 				const value = el.value;
-
 				const hasOriginal = Object.prototype.hasOwnProperty.call(
 					originalData,
 					field
 				);
 
 				if (value.trim() === "") {
-					// если поле пустое, НО в оригинальных данных что-то было —
-					// оставляем старое значение и не затираем его пустой строкой
+					// Пустое поле:
+					// если раньше было значение — оставляем старое
 					if (hasOriginal) {
 						payload[field] = originalData[field];
-					} else {
-						// если раньше этого поля не было — вообще не пишем его в payload
-						// (значит сайт использует дефолтный текст из HTML)
 					}
+					// если поля не было — не пишем его в payload (используется дефолт из HTML)
 				} else {
-					// есть какой-то текст — сохраняем его
+					// Есть текст — сохраняем
 					payload[field] = value;
 				}
 			});
 
 			try {
 				await fs.setDoc(docRef, payload, { merge: true });
-				// после успешного сохранения обновляем оригинал
+				// Обновляем оригинал
 				originalData = { ...originalData, ...payload };
 				alert("Content saved successfully!");
 			} catch (err) {
@@ -150,26 +150,25 @@
 			}
 		});
 
-		// 3) Инициализируем блок смены пароля (если он есть на странице)
+		// 3) Инициализируем блок смены пароля
 		initChangePassForm(db, fs);
 	}
 
-	// ======================
-	// Смена passcode
-	// ======================
-	async function initChangePassForm(db, fs) {
+	// =====================================================
+	// Смена passcode (тот же, что используется в auth.js)
+	// =====================================================
+	function initChangePassForm(db, fs) {
 		const form = document.getElementById("changePassForm");
-		if (!form) return; // на всякий случай
+		if (!form) return;
 
 		const msgEl = document.getElementById("cp-message");
 		const currentEl = document.getElementById("cp-current");
 		const newEl = document.getElementById("cp-new");
 		const confirmEl = document.getElementById("cp-confirm");
 
-		// док, где храним hash
-		const gateDocRef = fs.doc(db, "config", "passcode");
+		// Тот же документ, который читает auth.js: /authGate/gate
+		const gateDocRef = fs.doc(db, "authGate", "gate");
 
-		// утилита
 		function setMsg(text, type = "info") {
 			if (!msgEl) return;
 			const cls =
@@ -211,7 +210,7 @@
 			}
 
 			try {
-				// читаем текущие настройки gate
+				// Читаем текущие настройки
 				const snap = await fs.getDoc(gateDocRef);
 				if (!snap.exists()) {
 					setMsg(
@@ -223,37 +222,38 @@
 
 				const data = snap.data() || {};
 				const salt = data.salt;
-				const hash = data.hash;
+				const hash = data.passHash; // то же поле, что использует auth.js
 
 				if (!salt || !hash) {
 					setMsg("Passcode config is invalid. Ask developer to fix.", "error");
 					return;
 				}
 
-				// проверяем старый пароль
+				// Проверяем текущий пароль
 				const currentHash = await sha256Hex(`${salt}:${current}`);
 				if (currentHash !== hash) {
 					setMsg("Current passcode is incorrect.", "error");
 					return;
 				}
 
-				// генерим новый salt и hash
+				// Генерируем новый salt и hash
 				const newSalt = crypto
 					.getRandomValues(new Uint8Array(16))
 					.reduce((acc, b) => acc + b.toString(16).padStart(2, "0"), "");
+
 				const newHash = await sha256Hex(`${newSalt}:${next}`);
 
 				await fs.setDoc(
 					gateDocRef,
 					{
 						salt: newSalt,
-						hash: newHash,
+						passHash: newHash,
 						updatedAt: new Date().toISOString(),
 					},
 					{ merge: true }
 				);
 
-				// чистим поля
+				// Чистим поля формы
 				currentEl.value = "";
 				newEl.value = "";
 				confirmEl.value = "";
