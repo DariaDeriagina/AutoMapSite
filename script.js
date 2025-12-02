@@ -91,3 +91,14 @@ document.addEventListener("DOMContentLoaded", () => {
 		document.documentElement.style.setProperty("--reviews-anim", "paused");
 	}
 });
+
+function renderHeroTitle(raw) {
+	if (!raw) return "";
+
+	return raw
+		.replace(/EXPERTS/gi, `<span class="text-expert">EXPERTS</span>`)
+		.replace(/CAR/gi, `<span class="text-expert">CAR</span>`);
+}
+
+const heroTitleEl = document.getElementById("heroTitle");
+heroTitleEl.innerHTML = renderHeroTitle(data.heroTitle || "");
