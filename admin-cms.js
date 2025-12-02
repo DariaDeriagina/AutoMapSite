@@ -1,4 +1,4 @@
-// admin-cms.js — AutoMap CMS editor + passcode changer
+// admin-cms.js — AutoMap CMS editor (back-office + passcode change)
 
 (function () {
 	// Поля в Firestore и соответствующие поля формы (id: cms-...)
@@ -62,23 +62,8 @@
 		"footerCopyright",
 	];
 
-	// Те же дефолты, что в auth.js
-	const DEFAULT_PASS_SALT = "amcs-logbook-v1";
-	const DEFAULT_PASS_HASH =
-		"c8045312ba4e29913f25d4ed1bbc9a0a95815a7c0cd570e5ce775675bfef9a4c";
-
-	const AUTH_SETTINGS_COLLECTION = "settings";
-	const AUTH_SETTINGS_DOC_ID = "authGate";
-
-	async function sha256Hex(str) {
-		const buf = await crypto.subtle.digest(
-			"SHA-256",
-			new TextEncoder().encode(str)
-		);
-		return [...new Uint8Array(buf)]
-			.map((b) => b.toString(16).padStart(2, "0"))
-			.join("");
-	}
+	// тут будем хранить то, что загрузили из Firestore при открытии
+	let originalData = {};
 
 	async function initAdminCMS() {
 		const db = window.firebaseDB;
@@ -97,11 +82,13 @@
 
 		const docRef = fs.doc(db, "cms", "home");
 
-		// 1) Загрузить текущие данные CMS
+		// 1) Загрузить текущие данные cms/home
 		try {
 			const snap = await fs.getDoc(docRef);
 			if (snap.exists()) {
 				const data = snap.data() || {};
+				originalData = data; // ✅ запоминаем оригинал
+
 				FIELDS.forEach((field) => {
 					const el = document.getElementById("cms-" + field);
 					if (!el) return;
@@ -113,9 +100,11 @@
 				console.warn(
 					"[admin-cms] cms/home does not exist yet; will be created on first save"
 				);
+				originalData = {};
 			}
 		} catch (err) {
 			console.error("[admin-cms] failed to load cms/home:", err);
+			originalData = {};
 		}
 
 		// 2) Сохранение контента
@@ -123,15 +112,37 @@
 			e.preventDefault();
 
 			const payload = {};
+
 			FIELDS.forEach((field) => {
 				const el = document.getElementById("cms-" + field);
 				if (!el) return;
+
 				const value = el.value;
-				payload[field] = value;
+
+				const hasOriginal = Object.prototype.hasOwnProperty.call(
+					originalData,
+					field
+				);
+
+				if (value.trim() === "") {
+					// если поле пустое, НО в оригинальных данных что-то было —
+					// оставляем старое значение и не затираем его пустой строкой
+					if (hasOriginal) {
+						payload[field] = originalData[field];
+					} else {
+						// если раньше этого поля не было — вообще не пишем его в payload
+						// (значит сайт использует дефолтный текст из HTML)
+					}
+				} else {
+					// есть какой-то текст — сохраняем его
+					payload[field] = value;
+				}
 			});
 
 			try {
 				await fs.setDoc(docRef, payload, { merge: true });
+				// после успешного сохранения обновляем оригинал
+				originalData = { ...originalData, ...payload };
 				alert("Content saved successfully!");
 			} catch (err) {
 				console.error("[admin-cms] failed to save cms/home:", err);
@@ -139,126 +150,118 @@
 			}
 		});
 
-		// 3) Инициализация формы смены пароля
+		// 3) Инициализируем блок смены пароля (если он есть на странице)
 		initChangePassForm(db, fs);
 	}
 
+	// ======================
+	// Смена passcode
+	// ======================
 	async function initChangePassForm(db, fs) {
-		const changeForm = document.getElementById("changePassForm");
+		const form = document.getElementById("changePassForm");
+		if (!form) return; // на всякий случай
+
 		const msgEl = document.getElementById("cp-message");
+		const currentEl = document.getElementById("cp-current");
+		const newEl = document.getElementById("cp-new");
+		const confirmEl = document.getElementById("cp-confirm");
 
-		if (!changeForm || !msgEl) {
-			return;
-		}
+		// док, где храним hash
+		const gateDocRef = fs.doc(db, "config", "passcode");
 
-		const settingsRef = fs.doc(
-			db,
-			AUTH_SETTINGS_COLLECTION,
-			AUTH_SETTINGS_DOC_ID
-		);
-
-		// Подтянуть текущие настройки (или создать дефолт)
-		let currentSalt = DEFAULT_PASS_SALT;
-		let currentHash = DEFAULT_PASS_HASH;
-
-		try {
-			const snap = await fs.getDoc(settingsRef);
-			if (snap.exists()) {
-				const d = snap.data() || {};
-				if (d.passSalt && d.passHash) {
-					currentSalt = d.passSalt;
-					currentHash = d.passHash;
-				}
-			} else {
-				// Создаём дефолт, если ничего нет
-				await fs.setDoc(
-					settingsRef,
-					{
-						passSalt: DEFAULT_PASS_SALT,
-						passHash: DEFAULT_PASS_HASH,
-						createdAt: fs.serverTimestamp ? fs.serverTimestamp() : null,
-					},
-					{ merge: true }
-				);
-			}
-		} catch (err) {
-			console.error("[admin-cms] failed to load authGate settings:", err);
-			// продолжаем с дефолтом
-		}
-
-		function showMessage(text, type) {
-			msgEl.textContent = text;
-			msgEl.className =
-				"small mt-2 " +
-				(type === "error"
+		// утилита
+		function setMsg(text, type = "info") {
+			if (!msgEl) return;
+			const cls =
+				type === "error"
 					? "text-danger"
 					: type === "success"
 					? "text-success"
-					: "text-muted");
+					: "text-muted";
+			msgEl.className = "small mt-2 " + cls;
+			msgEl.textContent = text;
 		}
 
-		changeForm.addEventListener("submit", async (e) => {
+		async function sha256Hex(str) {
+			const buf = await crypto.subtle.digest(
+				"SHA-256",
+				new TextEncoder().encode(str)
+			);
+			return [...new Uint8Array(buf)]
+				.map((b) => b.toString(16).padStart(2, "0"))
+				.join("");
+		}
+
+		form.addEventListener("submit", async (e) => {
 			e.preventDefault();
+			setMsg("");
 
-			const currentInput = document.getElementById("cp-current").value.trim();
-			const newPass = document.getElementById("cp-new").value.trim();
-			const confirmPass = document.getElementById("cp-confirm").value.trim();
+			const current = currentEl.value.trim();
+			const next = newEl.value.trim();
+			const confirm = confirmEl.value.trim();
 
-			if (!currentInput || !newPass || !confirmPass) {
-				showMessage("Please fill in all fields.", "error");
+			if (!current || !next || !confirm) {
+				setMsg("Please fill in all fields.", "error");
 				return;
 			}
 
-			if (newPass.length < 4) {
-				showMessage("New passcode should be at least 4 characters.", "error");
-				return;
-			}
-
-			if (newPass !== confirmPass) {
-				showMessage("New passcode and confirmation do not match.", "error");
+			if (next !== confirm) {
+				setMsg("New passcodes do not match.", "error");
 				return;
 			}
 
 			try {
-				// Проверяем старый пароль
-				const currentInputHash = await sha256Hex(
-					`${currentSalt}:${currentInput}`
-				);
-				if (currentInputHash !== currentHash) {
-					showMessage("Current passcode is incorrect.", "error");
+				// читаем текущие настройки gate
+				const snap = await fs.getDoc(gateDocRef);
+				if (!snap.exists()) {
+					setMsg(
+						"Passcode config not found. Ask developer to set it up.",
+						"error"
+					);
 					return;
 				}
 
-				// Генерируем новый соль и хэш
-				const saltRandom = crypto
-					.getRandomValues(new Uint32Array(1))[0]
-					.toString(16)
-					.padStart(8, "0");
-				const newSalt = `amcs-${saltRandom}`;
-				const newHash = await sha256Hex(`${newSalt}:${newPass}`);
+				const data = snap.data() || {};
+				const salt = data.salt;
+				const hash = data.hash;
+
+				if (!salt || !hash) {
+					setMsg("Passcode config is invalid. Ask developer to fix.", "error");
+					return;
+				}
+
+				// проверяем старый пароль
+				const currentHash = await sha256Hex(`${salt}:${current}`);
+				if (currentHash !== hash) {
+					setMsg("Current passcode is incorrect.", "error");
+					return;
+				}
+
+				// генерим новый salt и hash
+				const newSalt = crypto
+					.getRandomValues(new Uint8Array(16))
+					.reduce((acc, b) => acc + b.toString(16).padStart(2, "0"), "");
+				const newHash = await sha256Hex(`${newSalt}:${next}`);
 
 				await fs.setDoc(
-					settingsRef,
+					gateDocRef,
 					{
-						passSalt: newSalt,
-						passHash: newHash,
-						updatedAt: fs.serverTimestamp ? fs.serverTimestamp() : null,
+						salt: newSalt,
+						hash: newHash,
+						updatedAt: new Date().toISOString(),
 					},
 					{ merge: true }
 				);
 
-				// Обновляем локальные значения, чтобы можно было менять ещё раз без перезагрузки
-				currentSalt = newSalt;
-				currentHash = newHash;
+				// чистим поля
+				currentEl.value = "";
+				newEl.value = "";
+				confirmEl.value = "";
 
-				changeForm.reset();
-				showMessage(
-					"Passcode updated successfully. It will be used on the next login.",
-					"success"
-				);
+				setMsg("Passcode updated successfully.", "success");
 			} catch (err) {
 				console.error("[admin-cms] failed to change passcode:", err);
-				showMessage("Error updating passcode. Please try again.", "error");
+				setMsg("Error updating passcode. Please try again.", "error");
 			}
 		});
 	}
