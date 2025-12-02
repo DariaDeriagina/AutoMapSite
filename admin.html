@@ -11,14 +11,14 @@
 			rel="stylesheet"
 		/>
 
-		<!-- Твои стили, чтобы админка была в бренде -->
+		<!-- Your brand styles -->
 		<link rel="stylesheet" href="styles.css" />
 	</head>
 	<body>
-		<!-- Gate (используем тот же auth.js, что и для logbook) -->
+		<!-- Gate (same auth.js as logbook) -->
 		<div id="gate"></div>
 
-		<!-- Админ-приложение, показывается только после успешного пароля -->
+		<!-- Admin app (only after unlock) -->
 		<div id="app" hidden>
 			<div class="container my-4" style="max-width: 900px">
 				<h1 class="mb-4">AutoMap Website Content</h1>
@@ -27,6 +27,7 @@
 					updates will appear on the public site immediately (no deploy needed).
 				</p>
 
+				<!-- MAIN CMS FORM -->
 				<form id="cmsForm" class="mb-5">
 					<!-- HERO -->
 					<section class="mb-4 p-3 border rounded">
@@ -428,9 +429,56 @@
 					</div>
 				</form>
 
+				<!-- CHANGE PASSCODE SECTION -->
+				<section class="mb-4 p-3 border rounded">
+					<h4>Security — Change passcode</h4>
+					<p class="text-muted small">
+						This passcode protects both the Logbook and this admin page. You
+						must enter the current passcode once and then choose a new one.
+					</p>
+
+					<form id="changePassForm" class="row g-3">
+						<div class="col-12 col-md-4">
+							<label class="form-label">Current passcode</label>
+							<input
+								type="password"
+								class="form-control"
+								id="cp-current"
+								autocomplete="off"
+							/>
+						</div>
+						<div class="col-12 col-md-4">
+							<label class="form-label">New passcode</label>
+							<input
+								type="password"
+								class="form-control"
+								id="cp-new"
+								autocomplete="off"
+							/>
+						</div>
+						<div class="col-12 col-md-4">
+							<label class="form-label">Repeat new passcode</label>
+							<input
+								type="password"
+								class="form-control"
+								id="cp-confirm"
+								autocomplete="off"
+							/>
+						</div>
+						<div class="col-12 d-flex justify-content-end">
+							<button type="submit" class="btn btn-outline-danger">
+								Change passcode
+							</button>
+						</div>
+						<div class="col-12">
+							<div id="cp-message" class="small mt-2"></div>
+						</div>
+					</form>
+				</section>
+
 				<p class="text-muted small">
-					Tip: you can always reset individual fields manually by clearing the
-					text and saving.
+					Tip: you can always reset individual content fields manually by
+					clearing the text and saving.
 				</p>
 			</div>
 		</div>
@@ -438,6 +486,6 @@
 		<!-- Firebase + Auth + Admin logic -->
 		<script type="module" src="/firebase.app.js?v=7"></script>
 		<script src="/auth.js?v=7"></script>
-		<script src="/admin-cms.js?v=1"></script>
+		<script src="/admin-cms.js?v=2"></script>
 	</body>
 </html>
