@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>AutoMap CMS Admin</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- Bootstrap -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+
+		<!-- Твои стили, чтобы админка была в бренде -->
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<!-- Gate (используем тот же auth.js, что и для logbook) -->
+		<div id="gate"></div>
+
+		<!-- Админ-приложение, показывается только после успешного пароля -->
+		<div id="app" hidden>
+			<div class="container my-4" style="max-width: 900px">
+				<h1 class="mb-4">AutoMap Website Content</h1>
+				<p class="text-muted mb-4">
+					Change website text here. After clicking <strong>Save</strong>,
+					updates will appear on the public site immediately (no deploy needed).
+				</p>
+
+				<form id="cmsForm" class="mb-5">
+					<!-- HERO -->
+					<section class="mb-4 p-3 border rounded">
+						<h4>Hero Section</h4>
+						<div class="mb-3">
+							<label class="form-label">Hero Title</label>
+							<textarea
+								class="form-control"
+								id="cms-heroTitle"
+								rows="2"
+							></textarea>
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Hero Subtitle</label>
+							<textarea
+								class="form-control"
+								id="cms-heroSubtitle"
+								rows="2"
+							></textarea>
+						</div>
+						<div class="row g-3">
+							<div class="col-md-6">
+								<label class="form-label">Primary Button Text (CALL NOW)</label>
+								<input
+									type="text"
+									class="form-control"
+									id="cms-heroPrimaryCta"
+								/>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label"
+									>Secondary Button Text (OUR SERVICES)</label
+								>
+								<input
+									type="text"
+									class="form-control"
+									id="cms-heroSecondaryCta"
+								/>
+							</div>
+						</div>
+						<div class="mt-3">
+							<label class="form-label">Hero Social Text</label>
+							<input type="text" class="form-control" id="cms-heroSocialText" />
+						</div>
+					</section>
+
+					<!-- CONTACT BOX UNDER HERO -->
+					<section class="mb-4 p-3 border rounded">
+						<h4>Top Contact Box (under Hero)</h4>
+						<div class="mb-3">
+							<label class="form-label">Address (short line)</label>
+							<input
+								type="text"
+								class="form-control"
+								id="cms-contactTopAddress"
+							/>
+						</div>
+						<div class="row g-3">
+							<div class="col-md-6">
+								<label class="form-label">Phone 1</label>
+								<input
+									type="text"
+									class="form-control"
+									id="cms-contactPhone1"
+								/>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">Phone 2</label>
+								<input
+									type="text"
+									class="form-control"
+									id="cms-contactPhone2"
+								/>
+							</div>
+						</div>
+					</section>
+
+					<!-- ABOUT -->
+					<section class="mb-4 p-3 border rounded">
+						<h4>About / Our Team</h4>
+						<div class="mb-3">
+							<label class="form-label">Section Kicker (small text)</label>
+							<input type="text" class="form-control" id="cms-aboutKicker" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Section Title</label>
+							<input type="text" class="form-control" id="cms-aboutTitle" />
+						</div>
+
+						<hr />
+						<h5>Rami</h5>
+						<div class="mb-3">
+							<label class="form-label">Name</label>
+							<input type="text" class="form-control" id="cms-ramiName" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Role / Position</label>
+							<input type="text" class="form-control" id="cms-ramiRole" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Description</label>
+							<textarea
+								class="form-control"
+								id="cms-ramiText"
+								rows="4"
+							></textarea>
+						</div>
+
+						<hr />
+						<h5>Mohammad</h5>
+						<div class="mb-3">
+							<label class="form-label">Name</label>
+							<input type="text" class="form-control" id="cms-mohName" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Role / Position</label>
+							<input type="text" class="form-control" id="cms-mohRole" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Description</label>
+							<textarea
+								class="form-control"
+								id="cms-mohText"
+								rows="4"
+							></textarea>
+						</div>
+					</section>
+
+					<!-- SERVICES -->
+					<section class="mb-4 p-3 border rounded">
+						<h4>Services</h4>
+						<div class="mb-3">
+							<label class="form-label">Section Kicker (small text)</label>
+							<input type="text" class="form-control" id="cms-servicesKicker" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Section Title</label>
+							<input type="text" class="form-control" id="cms-servicesTitle" />
+						</div>
+
+						<!-- Service items 1–9 -->
+						<hr />
+						<h5>Service 1</h5>
+						<div class="mb-3">
+							<label class="form-label">Title</label>
+							<input type="text" class="form-control" id="cms-service1Title" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Description</label>
+							<textarea
+								class="form-control"
+								id="cms-service1Desc"
+								rows="2"
+							></textarea>
+						</div>
+
+						<hr />
+						<h5>Service 2</h5>
+						<div class="mb-3">
+							<label class="form-label">Title</label>
+							<input type="text" class="form-control" id="cms-service2Title" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Description</label>
+							<textarea
+								class="form-control"
+								id="cms-service2Desc"
+								rows="2"
+							></textarea>
+						</div>
+
+						<hr />
+						<h5>Service 3</h5>
+						<div class="mb-3">
+							<label class="form-label">Title</label>
+							<input type="text" class="form-control" id="cms-service3Title" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Description</label>
+							<textarea
+								class="form-control"
+								id="cms-service3Desc"
+								rows="2"
+							></textarea>
+						</div>
+
+						<hr />
+						<h5>Service 4</h5>
+						<div class="mb-3">
+							<label class="form-label">Title</label>
+							<input type="text" class="form-control" id="cms-service4Title" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Description</label>
+							<textarea
+								class="form-control"
+								id="cms-service4Desc"
+								rows="2"
+							></textarea>
+						</div>
+
+						<hr />
+						<h5>Service 5</h5>
+						<div class="mb-3">
+							<label class="form-label">Title</label>
+							<input type="text" class="form-control" id="cms-service5Title" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Description</label>
+							<textarea
+								class="form-control"
+								id="cms-service5Desc"
+								rows="2"
+							></textarea>
+						</div>
+
+						<hr />
+						<h5>Service 6</h5>
+						<div class="mb-3">
+							<label class="form-label">Title</label>
+							<input type="text" class="form-control" id="cms-service6Title" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Description</label>
+							<textarea
+								class="form-control"
+								id="cms-service6Desc"
+								rows="2"
+							></textarea>
+						</div>
+
+						<hr />
+						<h5>Service 7</h5>
+						<div class="mb-3">
+							<label class="form-label">Title</label>
+							<input type="text" class="form-control" id="cms-service7Title" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Description</label>
+							<textarea
+								class="form-control"
+								id="cms-service7Desc"
+								rows="2"
+							></textarea>
+						</div>
+
+						<hr />
+						<h5>Service 8</h5>
+						<div class="mb-3">
+							<label class="form-label">Title</label>
+							<input type="text" class="form-control" id="cms-service8Title" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Description</label>
+							<textarea
+								class="form-control"
+								id="cms-service8Desc"
+								rows="2"
+							></textarea>
+						</div>
+
+						<hr />
+						<h5>Service 9</h5>
+						<div class="mb-3">
+							<label class="form-label">Title</label>
+							<input type="text" class="form-control" id="cms-service9Title" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Description</label>
+							<textarea
+								class="form-control"
+								id="cms-service9Desc"
+								rows="2"
+							></textarea>
+						</div>
+					</section>
+
+					<!-- TESTIMONIALS / VIDEO -->
+					<section class="mb-4 p-3 border rounded">
+						<h4>Testimonials & Video</h4>
+						<div class="mb-3">
+							<label class="form-label">Testimonials Kicker (small text)</label>
+							<input
+								type="text"
+								class="form-control"
+								id="cms-testimonialsKicker"
+							/>
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Testimonials Title</label>
+							<input
+								type="text"
+								class="form-control"
+								id="cms-testimonialsTitle"
+							/>
+						</div>
+
+						<hr />
+						<div class="mb-3">
+							<label class="form-label">Video Intro Text</label>
+							<input type="text" class="form-control" id="cms-videoIntro" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Video Section Title</label>
+							<input type="text" class="form-control" id="cms-videoTitle" />
+						</div>
+					</section>
+
+					<!-- CONTACT SECTION -->
+					<section class="mb-4 p-3 border rounded">
+						<h4>Contact Section</h4>
+						<div class="mb-3">
+							<label class="form-label">Section Kicker (small text)</label>
+							<input type="text" class="form-control" id="cms-contactKicker" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Section Title</label>
+							<input type="text" class="form-control" id="cms-contactTitle" />
+						</div>
+
+						<hr />
+						<h5>Call Column</h5>
+						<div class="mb-3">
+							<label class="form-label">Call Label</label>
+							<input
+								type="text"
+								class="form-control"
+								id="cms-contactCallLabel"
+							/>
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Call Hours</label>
+							<input
+								type="text"
+								class="form-control"
+								id="cms-contactCallHours"
+							/>
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Call Number Text</label>
+							<input
+								type="text"
+								class="form-control"
+								id="cms-contactCallNumber"
+							/>
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Call Button Text</label>
+							<input
+								type="text"
+								class="form-control"
+								id="cms-contactCallButton"
+							/>
+						</div>
+
+						<hr />
+						<h5>Address Column</h5>
+						<div class="mb-3">
+							<label class="form-label">Address Label</label>
+							<input
+								type="text"
+								class="form-control"
+								id="cms-contactAddressLabel"
+							/>
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Address Hours</label>
+							<input
+								type="text"
+								class="form-control"
+								id="cms-contactAddressHours"
+							/>
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Address Text (two-line)</label>
+							<textarea
+								class="form-control"
+								id="cms-contactAddressText"
+								rows="2"
+							></textarea>
+						</div>
+					</section>
+
+					<!-- FOOTER -->
+					<section class="mb-4 p-3 border rounded">
+						<h4>Footer</h4>
+						<div class="mb-3">
+							<label class="form-label">Copyright Text</label>
+							<input
+								type="text"
+								class="form-control"
+								id="cms-footerCopyright"
+							/>
+						</div>
+					</section>
+
+					<div class="d-flex justify-content-end">
+						<button type="submit" class="btn btn-primary">Save Changes</button>
+					</div>
+				</form>
+
+				<p class="text-muted small">
+					Tip: you can always reset individual fields manually by clearing the
+					text and saving.
+				</p>
+			</div>
+		</div>
+
+		<!-- Firebase + Auth + Admin logic -->
+		<script type="module" src="/firebase.app.js?v=7"></script>
+		<script src="/auth.js?v=7"></script>
+		<script src="/admin-cms.js?v=1"></script>
+	</body>
+</html>
