@@ -40,15 +40,15 @@
 			heroSubtitleEl.textContent = data.heroSubtitle;
 		}
 
-		// Hero buttons
-		const primaryCtaEl = document.querySelector(".call-btn");
-		if (primaryCtaEl && data.heroPrimaryCta) {
-			primaryCtaEl.textContent = data.heroPrimaryCta;
+		// Hero buttons (меняем только текст в span, не трогаем разметку с иконкой)
+		const primaryCtaLabelEl = document.getElementById("heroPrimaryCta");
+		if (primaryCtaLabelEl && data.heroPrimaryCta) {
+			primaryCtaLabelEl.textContent = data.heroPrimaryCta;
 		}
 
-		const secondaryCtaEl = document.querySelector(".our-service-btn");
-		if (secondaryCtaEl && data.heroSecondaryCta) {
-			secondaryCtaEl.textContent = data.heroSecondaryCta;
+		const secondaryCtaLabelEl = document.getElementById("heroSecondaryCta");
+		if (secondaryCtaLabelEl && data.heroSecondaryCta) {
+			secondaryCtaLabelEl.textContent = data.heroSecondaryCta;
 		}
 
 		// Hero social text
