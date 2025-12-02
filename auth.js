@@ -1,10 +1,10 @@
 // ===============================
-// auth.js — Passcode gate (EN) with Firestore-based passcode
+// auth.js — Passcode gate + Firestore config
 // ===============================
 
-// 🔐 Значения по умолчанию (те, что были захардкожены раньше)
-const DEFAULT_PASS_SALT = "amcs-logbook-v1";
-const DEFAULT_PASS_HASH =
+// ДЕФОЛТНЫЕ (зашитые) значения — работают как резервный вариант
+let PASS_SALT = "amcs-logbook-v1";
+let PASS_HASH =
 	"c8045312ba4e29913f25d4ed1bbc9a0a95815a7c0cd570e5ce775675bfef9a4c";
 
 const MAX_ATTEMPTS = 5;
@@ -16,15 +16,7 @@ const STORAGE_KEY = "amcs_gate";
 const gateEl = document.getElementById("gate");
 const appEl = document.getElementById("app");
 
-// 🔐 Текущее значение пароля (может перезаписаться данными из Firestore)
-let CURRENT_PASS_SALT = DEFAULT_PASS_SALT;
-let CURRENT_PASS_HASH = DEFAULT_PASS_HASH;
-
-// Firestore-документ, где хранится пароль
-const AUTH_SETTINGS_COLLECTION = "settings";
-const AUTH_SETTINGS_DOC_ID = "authGate";
-
-// ----------------- helpers -----------------
+// ---------- helpers ----------
 function timingSafeEqual(a, b) {
 	if (a.length !== b.length) return false;
 	let r = 0;
@@ -54,7 +46,7 @@ function setState(o) {
 	STORAGE.setItem(STORAGE_KEY, JSON.stringify(o || {}));
 }
 
-// ----------------- UI -----------------
+// ---------- UI ----------
 function showApp() {
 	appEl.hidden = false;
 	gateEl.innerHTML = `
@@ -92,7 +84,8 @@ function showForm(message = "") {
           <p class="text-muted small mt-3 mb-0">Protected area — AutoMap staff only</p>
         </div>
       </div>
-    </div>`;
+    </div>
+  `;
 
 	const input = document.getElementById("passInput");
 	input.focus();
@@ -101,59 +94,14 @@ function showForm(message = "") {
 		input.type = input.type === "password" ? "text" : "password";
 		input.focus();
 	};
-
 	document.getElementById("resetBtn").onclick = () => {
 		setState({});
 		showForm();
 	};
-
 	document.getElementById("passForm").onsubmit = onSubmit;
 }
 
-// ----------------- Firestore: загрузка пароля -----------------
-async function loadPasscodeFromFirestore() {
-	const db = window.firebaseDB;
-	const fs = window.fs;
-
-	if (!db || !fs || !fs.doc || !fs.getDoc || !fs.setDoc) {
-		console.warn(
-			"[auth] Firebase or fs.{doc,getDoc,setDoc} not ready, using default passcode"
-		);
-		return;
-	}
-
-	try {
-		const docRef = fs.doc(db, AUTH_SETTINGS_COLLECTION, AUTH_SETTINGS_DOC_ID);
-		const snap = await fs.getDoc(docRef);
-
-		if (snap.exists()) {
-			const data = snap.data() || {};
-			if (data.passSalt && data.passHash) {
-				CURRENT_PASS_SALT = data.passSalt;
-				CURRENT_PASS_HASH = data.passHash;
-				console.log("[auth] Loaded passcode from Firestore");
-				return;
-			}
-		}
-
-		// Если документа нет — создаём с дефолтными значениями
-		await fs.setDoc(
-			docRef,
-			{
-				passSalt: DEFAULT_PASS_SALT,
-				passHash: DEFAULT_PASS_HASH,
-				createdAt: fs.serverTimestamp ? fs.serverTimestamp() : null,
-			},
-			{ merge: true }
-		);
-		console.log("[auth] Created default authGate doc in Firestore");
-	} catch (err) {
-		console.error("[auth] Failed to load auth settings from Firestore:", err);
-		// В этом случае просто продолжаем с дефолтным паролем
-	}
-}
-
-// ----------------- submit -----------------
+// ---------- submit ----------
 async function onSubmit(e) {
 	e.preventDefault();
 	const st = getState();
@@ -166,9 +114,9 @@ async function onSubmit(e) {
 	}
 
 	const pass = document.getElementById("passInput").value.trim();
-	const hash = await sha256Hex(`${CURRENT_PASS_SALT}:${pass}`);
+	const hash = await sha256Hex(`${PASS_SALT}:${pass}`);
 
-	if (timingSafeEqual(hash, CURRENT_PASS_HASH)) {
+	if (timingSafeEqual(hash, PASS_HASH)) {
 		setState({ unlocked: true });
 		showApp();
 	} else {
@@ -185,23 +133,61 @@ async function onSubmit(e) {
 	}
 }
 
-// ----------------- init -----------------
+// ---------- Firestore config load ----------
+async function loadAuthConfigFromFirestore() {
+	const db = window.firebaseDB;
+	const fs = window.fs;
+	if (!db || !fs) {
+		console.warn("[auth] Firebase not ready, using default passcode");
+		return;
+	}
+
+	try {
+		const docRef = fs.doc(db, "authGate", "gate");
+		const snap = await fs.getDoc(docRef);
+		if (!snap.exists()) {
+			console.warn(
+				"[auth] /authGate/gate does not exist, using default passcode"
+			);
+			return;
+		}
+
+		const data = snap.data() || {};
+		if (typeof data.salt === "string" && typeof data.passHash === "string") {
+			PASS_SALT = data.salt;
+			PASS_HASH = data.passHash;
+			console.info("[auth] Loaded passcode config from Firestore");
+		} else {
+			console.warn(
+				"[auth] /authGate/gate has no salt/passHash fields, using defaults"
+			);
+		}
+	} catch (err) {
+		console.error("[auth] Failed to load auth settings from Firestore:", err);
+		// в этом случае просто работаем с дефолтным PASS_SALT/PASS_HASH
+	}
+}
+
+// ---------- старт ----------
+function startGate() {
+	const st = getState();
+	if (st.unlocked) showApp();
+	else showForm();
+}
+
 (function init() {
-	// Функция, которую вызываем, когда Firebase готов (или если его нет)
-	const start = async () => {
-		// Пробуем подтянуть пароль из Firestore (если доступен)
-		await loadPasscodeFromFirestore();
-
-		const st = getState();
-		if (st.unlocked) showApp();
-		else showForm();
-	};
-
-	// Если firebase уже есть
+	// Ждём Firebase (анонимный логин + Firestore), чтобы был request.auth != null
 	if (window.firebaseDB && window.fs) {
-		start();
+		// Firebase уже готов
+		loadAuthConfigFromFirestore().finally(startGate);
 	} else {
-		// Ждём событие от firebase.app.js
-		window.addEventListener("firebase-ready", start, { once: true });
+		// Ждём событие из firebase.app.js
+		window.addEventListener(
+			"firebase-ready",
+			() => {
+				loadAuthConfigFromFirestore().finally(startGate);
+			},
+			{ once: true }
+		);
 	}
 })();
