@@ -219,7 +219,7 @@ html {
 
 .contact-box a {
 	transition: all 0.3s ease;
-	line-height: 0.5;
+	line-height: 1.2;
 }
 
 .contact-box a:hover {
