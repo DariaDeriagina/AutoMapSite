@@ -2,7 +2,7 @@
 
 (function () {
 	const FIELD_TO_ELEMENT = {
-		heroTitle: "heroTitle",
+		// heroTitle УБРАЛИ специально, им занимается script.js
 		heroSubtitle: "heroSubtitle",
 		heroPrimaryCta: "heroPrimaryCta",
 		heroSecondaryCta: "heroSecondaryCta",
