@@ -1,4 +1,4 @@
-// logbook.js — AutoMap Logbook UI (with clearPeriod + exportCSV)
+// logbook.js — AutoMap Logbook UI (with working clearPeriod + exportCSV)
 
 (function () {
 	function initLogbook() {
@@ -24,7 +24,7 @@
 
 		const entriesCol = fs.collection(db, "entries");
 
-		// будем хранить текущие записи (для exportCSV)
+		// будем хранить текущие записи для exportCSV и clearPeriod
 		let currentEntries = [];
 
 		// ---------- Add entry ----------
@@ -71,7 +71,7 @@
 				now.getDate()
 			);
 			const startOfWeek = new Date(startOfDay);
-			// Неделя с воскресенья (как в исходном коде)
+			// Неделя начинается с воскресенья (как в исходном варианте)
 			startOfWeek.setDate(startOfWeek.getDate() - startOfDay.getDay());
 			const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
@@ -93,7 +93,7 @@
 				const price = data.price || 0;
 				const service = data.service || "";
 
-				// копим для exportCSV
+				// сохраняем для дальнейшего использования
 				currentEntries.push({
 					id: docSnap.id,
 					service,
@@ -137,7 +137,7 @@
 			await fs.deleteDoc(fs.doc(db, "entries", id));
 		});
 
-		// ---------- Delete by period (day / week / month) ----------
+		// ---------- Delete by period using currentEntries ----------
 		window.clearPeriod = async function (period) {
 			if (!["day", "week", "month"].includes(period)) return;
 
@@ -151,8 +151,6 @@
 			if (!confirm(`Are you sure you want to delete ${label}`)) return;
 
 			const now = new Date();
-			let start;
-
 			const startOfDay = new Date(
 				now.getFullYear(),
 				now.getMonth(),
@@ -162,25 +160,27 @@
 			startOfWeek.setDate(startOfWeek.getDate() - startOfDay.getDay());
 			const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
+			let start;
 			if (period === "day") start = startOfDay;
 			if (period === "week") start = startOfWeek;
 			if (period === "month") start = startOfMonth;
 
+			// какие записи попадают под удаление
+			const toDelete = currentEntries.filter(
+				(e) => e.createdAt && e.createdAt >= start
+			);
+
+			if (!toDelete.length) {
+				alert("No entries found for this period.");
+				return;
+			}
+
 			try {
-				const q = fs.query(entriesCol, fs.where("createdAt", ">=", start));
-				const snap = await fs.getDocs(q);
-
-				if (snap.empty) {
-					alert("No entries found for this period.");
-					return;
-				}
-
 				let count = 0;
-				for (const docSnap of snap.docs) {
-					await fs.deleteDoc(docSnap.ref);
+				for (const entry of toDelete) {
+					await fs.deleteDoc(fs.doc(db, "entries", entry.id));
 					count++;
 				}
-
 				alert(`Deleted ${count} entries.`);
 			} catch (err) {
 				console.error("[logbook] clearPeriod error:", err);
