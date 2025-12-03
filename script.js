@@ -9,15 +9,26 @@
 	function renderHeroTitle(raw) {
 		if (!raw) return "";
 
-		// Сначала заменим перенос строки на <br>
+		// Перенос строки → <br>
 		let html = raw.replace(/\r?\n/g, "<br />");
 
 		// Подсветка ключевых слов
 		html = html
-			.replace(/EXPERTS/gi, '<span class="text-expert">EXPERTS</span>')
-			.replace(/CAR/gi, '<span class="text-expert">CAR</span>');
+			.replace(/EXPERTS/gi, '<span class="text-expert">$&</span>')
+			.replace(/CAR/gi, '<span class="text-expert">$&</span>');
 
 		return html;
+	}
+
+	// Отдельная функция, чтобы можно было вызывать её после CMS
+	function highlightHeroTitle() {
+		const el = document.getElementById("heroTitle");
+		if (!el) return;
+
+		const raw = el.textContent.trim();
+		if (!raw) return;
+
+		el.innerHTML = renderHeroTitle(raw);
 	}
 
 	// =========================
@@ -277,6 +288,20 @@
 	function initUI() {
 		const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
 		const sections = document.querySelectorAll("section[id]");
+		const nav = document.getElementById("navbarNav");
+
+		// будем знать, на каком скролле меню было открыто
+		let navOpenScrollY = null;
+
+		// отслеживаем открытие/закрытие бутстраповского бургера
+		if (nav && typeof bootstrap !== "undefined") {
+			nav.addEventListener("shown.bs.collapse", () => {
+				navOpenScrollY = window.scrollY;
+			});
+			nav.addEventListener("hidden.bs.collapse", () => {
+				navOpenScrollY = null;
+			});
+		}
 
 		// Smooth scroll with offset
 		navLinks.forEach((link) => {
@@ -294,9 +319,12 @@
 
 				window.scrollTo({ top, behavior: "smooth" });
 
-				// close Bootstrap nav on mobile
-				const nav = document.getElementById("navbarNav");
-				if (nav && typeof bootstrap !== "undefined") {
+				// закрываем мобильное меню после клика по пункту
+				if (
+					nav &&
+					typeof bootstrap !== "undefined" &&
+					window.innerWidth < 992
+				) {
 					const bs = bootstrap.Collapse.getOrCreateInstance(nav, {
 						toggle: false,
 					});
@@ -330,6 +358,21 @@
 					window.requestAnimationFrame(() => {
 						setActive();
 						ticking = false;
+
+						// авто-закрытие бургера только если реально проскроллили подальше
+						if (
+							nav &&
+							typeof bootstrap !== "undefined" &&
+							window.innerWidth < 992 &&
+							nav.classList.contains("show") &&
+							navOpenScrollY !== null &&
+							Math.abs(window.scrollY - navOpenScrollY) > 80 // порог в пикселях
+						) {
+							const bs = bootstrap.Collapse.getOrCreateInstance(nav, {
+								toggle: false,
+							});
+							bs.hide();
+						}
 					});
 					ticking = true;
 				}
@@ -372,13 +415,19 @@
 	function start() {
 		initUI();
 
-		// Ждём Firebase, чтобы подтянуть CMS
+		// Сначала подсветим заголовок по умолчанию
+		highlightHeroTitle();
+
+		// Ждём Firebase, чтобы подтянуть CMS, затем ещё раз подсветим заголовок
+		const runCms = async () => {
+			await loadCmsAndApply();
+			highlightHeroTitle(); // на случай, если CMS изменил текст
+		};
+
 		if (window.firebaseDB && window.fs) {
-			loadCmsAndApply();
+			runCms();
 		} else {
-			window.addEventListener("firebase-ready", loadCmsAndApply, {
-				once: true,
-			});
+			window.addEventListener("firebase-ready", runCms, { once: true });
 		}
 	}
 
@@ -388,27 +437,3 @@
 		start();
 	}
 })();
-document.addEventListener("DOMContentLoaded", () => {
-	function highlightHeroTitle() {
-		const el = document.getElementById("heroTitle");
-		if (!el) return;
-
-		// Берём только текст (без старых span-ов)
-		const raw = el.textContent.trim();
-		if (!raw) return;
-
-		let html = raw.replace(/\r?\n/g, "<br />");
-
-		html = html
-			.replace(/EXPERTS/gi, '<span class="text-expert">$&</span>')
-			.replace(/CAR/gi, '<span class="text-expert">$&</span>');
-
-		el.innerHTML = html;
-	}
-
-	// 1) сразу после загрузки
-	highlightHeroTitle();
-
-	// 2) ещё раз чуть позже — вдруг CMS успел перезаписать текст после Firebase
-	setTimeout(highlightHeroTitle, 800);
-});
